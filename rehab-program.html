@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Rehab Rx">
+<title>Full Body Rehab Program</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html,body{min-height:100%;font-family:Georgia,'Times New Roman',serif;background:#0A0E1A;color:#E8EEF7;}
+  body{background:linear-gradient(135deg,#0A0E1A 0%,#0D1B2A 50%,#0A1628 100%);background-attachment:fixed;}
+  .grid-bg{position:fixed;inset:0;opacity:.03;background-image:linear-gradient(#38BDF8 1px,transparent 1px),linear-gradient(90deg,#38BDF8 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+  .wrap{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:24px 14px 40px;}
+
+  /* HEADER */
+  .header{text-align:center;margin-bottom:24px;}
+  .header-sub{display:inline-block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.25em;text-transform:uppercase;background:linear-gradient(90deg,#38BDF8,#34D399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;}
+  .header h1{font-size:clamp(20px,5vw,32px);font-weight:700;letter-spacing:-.02em;background:linear-gradient(135deg,#E8EEF7 30%,#38BDF8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2;}
+  .header p{margin-top:6px;color:#64748B;font-size:12px;font-family:'Courier New',monospace;letter-spacing:.1em;}
+
+  /* INJURY GRID */
+  .injury-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:18px;}
+  .injury-card{background:linear-gradient(135deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border-radius:8px;padding:10px 12px;}
+  .injury-label{font-size:10px;font-family:'Courier New',monospace;letter-spacing:.08em;text-transform:uppercase;}
+  .injury-detail{font-size:12px;color:#94A3B8;margin-top:4px;line-height:1.5;}
+
+  /* WARNINGS */
+  .warn-wrap{background:rgba(244,114,182,.06);border:1px solid rgba(244,114,182,.2);border-radius:10px;margin-bottom:18px;overflow:hidden;}
+  .warn-btn{width:100%;background:none;border:none;cursor:pointer;padding:11px 16px;display:flex;justify-content:space-between;align-items:center;color:#F472B6;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;}
+  .warn-list{padding:0 16px 14px;display:flex;flex-direction:column;gap:7px;}
+  .warn-item{display:flex;align-items:flex-start;gap:10px;background:rgba(255,255,255,.03);border-radius:6px;padding:8px 12px;}
+  .warn-text{font-size:12px;color:#CBD5E1;line-height:1.5;}
+
+  /* DAY TABS */
+  .day-tabs{display:flex;gap:6px;margin-bottom:18px;overflow-x:auto;padding-bottom:4px;-ms-overflow-style:none;scrollbar-width:none;}
+  .day-tabs::-webkit-scrollbar{display:none;}
+  .day-btn{flex:0 0 auto;padding:9px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;cursor:pointer;color:#94A3B8;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.08em;transition:all .2s;}
+  .day-btn.active{background:linear-gradient(135deg,#38BDF8,#0EA5E9);border-color:transparent;color:#000D1A;font-weight:700;}
+
+  /* DAY HEADER */
+  .day-header{background:linear-gradient(135deg,rgba(56,189,248,.1),rgba(52,211,153,.06));border:1px solid rgba(56,189,248,.2);border-radius:12px;padding:16px 18px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;}
+  .day-title-sub{font-family:'Courier New',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#38BDF8;}
+  .day-title{font-size:19px;font-weight:700;color:#E8EEF7;margin-top:2px;}
+  .day-desc{font-size:12px;color:#64748B;margin-top:4px;line-height:1.5;}
+  .day-count{background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.2);border-radius:8px;padding:8px 14px;text-align:center;flex-shrink:0;}
+  .day-count-num{font-size:20px;font-weight:700;color:#38BDF8;}
+  .day-count-label{font-size:10px;color:#64748B;font-family:'Courier New',monospace;}
+
+  /* REGION FILTERS */
+  .region-filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;}
+  .region-btn{padding:5px 12px;background:transparent;border:1px solid rgba(255,255,255,.1);border-radius:20px;cursor:pointer;color:#64748B;font-size:10px;font-family:'Courier New',monospace;letter-spacing:.06em;transition:all .2s;}
+  .region-btn.active{color:#E8EEF7;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);}
+
+  /* DIVIDER */
+  .section-divider{display:flex;align-items:center;gap:8px;margin:16px 0 10px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;}
+  .divider-line{flex:1;height:1px;}
+
+  /* EXERCISE CARDS */
+  .ex-card{border-radius:10px;overflow:hidden;margin-bottom:8px;transition:all .2s;}
+  .ex-header{width:100%;background:none;border:none;cursor:pointer;padding:12px 14px;text-align:left;display:flex;align-items:center;gap:10px;}
+  .ex-name{font-weight:600;color:#E8EEF7;font-size:14px;}
+  .ex-tag{font-size:10px;padding:2px 8px;border-radius:10px;font-family:'Courier New',monospace;letter-spacing:.06em;flex-shrink:0;}
+  .ex-meta{display:flex;gap:14px;margin-top:4px;flex-wrap:wrap;}
+  .ex-reps{font-size:12px;color:#38BDF8;font-family:'Courier New',monospace;}
+  .ex-equip{font-size:12px;color:#64748B;}
+  .ex-chevron{color:#38BDF8;font-size:14px;flex-shrink:0;margin-left:auto;}
+  .ex-body{padding:0 14px 14px;border-top:1px solid rgba(255,255,255,.05);}
+  .ex-notes{background:rgba(0,0,0,.2);border-radius:8px;padding:10px 14px;margin-top:10px;font-size:13px;color:#94A3B8;line-height:1.65;}
+  .ex-stats{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center;}
+  .ex-stat{border-radius:8px;padding:8px 14px;display:flex;flex-direction:column;align-items:center;min-width:56px;}
+  .ex-stat-num{font-size:16px;font-weight:700;}
+  .ex-stat-label{font-size:10px;color:#64748B;font-family:'Courier New',monospace;}
+  .video-btn{padding:8px 16px;border-radius:8px;background:rgba(255,0,0,.12);border:1px solid rgba(255,0,0,.25);color:#FC4D4D;text-decoration:none;font-size:12px;font-weight:600;font-family:'Courier New',monospace;display:inline-flex;align-items:center;gap:6px;}
+
+  /* FOOTER */
+  .footer{margin-top:28px;padding:16px 18px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px;text-align:center;font-size:11px;color:#475569;line-height:1.8;}
+  .footer span{color:#F472B6;}
+
+  /* HIDDEN */
+  .hidden{display:none!important;}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-sub">◆ Sport Medicine &amp; Physical Therapy ◆</div>
+    <h1>FULL BODY REHABILITATION</h1>
+    <p>MULTI-REGION · 7-DAY PROTOCOL · WEEK 4 POST-ACHILLES REPAIR</p>
+  </div>
+
+  <!-- INJURY CARDS -->
+  <div class="injury-grid" id="injuryGrid"></div>
+
+  <!-- WARNINGS -->
+  <div class="warn-wrap">
+    <button class="warn-btn" onclick="toggleWarnings()">
+      <span>⚠️ CRITICAL RESTRICTIONS — READ BEFORE TRAINING</span>
+      <span id="warnToggle">▲ HIDE</span>
+    </button>
+    <div class="warn-list" id="warnList"></div>
+  </div>
+
+  <!-- DAY TABS -->
+  <div class="day-tabs" id="dayTabs"></div>
+
+  <!-- DAY HEADER -->
+  <div class="day-header">
+    <div>
+      <div class="day-title-sub" id="dayName"></div>
+      <div class="day-title" id="dayFocus"></div>
+      <div class="day-desc" id="dayDesc"></div>
+    </div>
+    <div class="day-count">
+      <div class="day-count-num" id="dayCount"></div>
+      <div class="day-count-label">EXERCISES</div>
+    </div>
+  </div>
+
+  <!-- REGION FILTERS -->
+  <div class="region-filters" id="regionFilters"></div>
+
+  <!-- EXERCISE LIST -->
+  <div id="exerciseList"></div>
+
+  <div class="footer">
+    ⚕️ Based on evidence-based rehabilitation protocols (McGill 2015, Maffulli et al. 2020, Dye et al.).<br>
+    Always work with your physical therapist and orthopedic surgeon.<br>
+    <span>Stop any exercise that reproduces sharp pain. Not a substitute for medical supervision.</span>
+  </div>
+</div>
+
+<script>
+const REGIONS = {
+  MORNING: { label:"Morning Mobility", color:"#F0A500", bg:"rgba(240,165,0,0.15)" },
+  CERVICAL: { label:"Cervical Spine",  color:"#38BDF8", bg:"rgba(56,189,248,0.12)" },
+  LUMBAR:   { label:"Lumbar Spine",    color:"#A78BFA", bg:"rgba(167,139,250,0.12)" },
+  RIGHT_KNEE:{ label:"Right Knee",     color:"#34D399", bg:"rgba(52,211,153,0.12)" },
+  LEFT_KNEE: { label:"Left Knee",      color:"#FB923C", bg:"rgba(251,146,60,0.12)" },
+  ANKLE:    { label:"Right Ankle",     color:"#F472B6", bg:"rgba(244,114,182,0.12)" },
+  HIP:      { label:"Hips",            color:"#FACC15", bg:"rgba(250,204,21,0.12)" },
+};
+
+const EQ = {
+  "None":"🧘","Foam Roller":"🪵","Resistance Band":"💪","Yoga Mat":"🟩",
+  "Step/Box":"📦","Towel":"🪙","Stationary Bike":"🚲","Ankle Weight":"🏋️",
+  "Ice Pack":"🧊","Pillow/Bolster":"🛏️","Wall":"🧱"
+};
+
+const INJURIES = [
+  {label:"Cervical Spine", detail:"C5-6 Herniation\nC4-5 & C6-7 Bulge", color:"#38BDF8"},
+  {label:"Lumbar Spine",   detail:"L4-5 & L5-S1\nDisc Bulges",          color:"#A78BFA"},
+  {label:"Right Knee",     detail:"Medial Meniscus\nPartial ACL Tear",   color:"#34D399"},
+  {label:"Left Knee",      detail:"Lateral Pain\n(IT Band / LCL)",       color:"#FB923C"},
+  {label:"Right Ankle",    detail:"Haglund's / Achilles\nWeek 4 Post-Op",color:"#F472B6"},
+  {label:"Hips",           detail:"Hip Pain\nBilateral",                  color:"#FACC15"},
+];
+
+const WARNINGS = [
+  {icon:"⚠️", text:"No dorsiflexion above 10° (Right Ankle — Achilles repair Week 4)", color:"#F472B6"},
+  {icon:"🦵", text:"No knee flexion beyond 45–60° (Right Knee — medial meniscus radial tear)", color:"#34D399"},
+  {icon:"🔄", text:"No cutting, pivoting or lateral loading on right knee (Partial ACL)", color:"#34D399"},
+  {icon:"🏋️", text:"No axial spinal loading or heavy lifting (C5-C6 herniation, L4-5 & L5-S1 bulges)", color:"#A78BFA"},
+  {icon:"👟", text:"Full weight in CAM boot Week 4. Wean to sneaker with lace-up brace when cleared", color:"#F472B6"},
+];
+
+const MORNING = [
+  {name:"Cervical Chin Tucks", region:"MORNING", sets:3, reps:"10", hold:"3s", equipment:"None",
+   notes:"Gently retract chin straight back. No up/down tilt. Protects C4–C7 discs.",critical:false,
+   video:"https://www.youtube.com/results?search_query=cervical+chin+tuck+exercise"},
+  {name:"Cat-Cow Spinal Mobilization", region:"MORNING", sets:3, reps:"10", hold:"", equipment:"Yoga Mat",
+   notes:"Slow, controlled. Decompress L4-5 and L5-S1. Inhale on cow, exhale on cat.",critical:false,
+   video:"https://www.youtube.com/results?search_query=cat+cow+lumbar+spine+rehab"},
+  {name:"Supine Knee-to-Chest Stretch", region:"MORNING", sets:3, reps:"30s", hold:"30s", equipment:"Yoga Mat",
+   notes:"Single leg. Gently pull knee toward chest. Decompress lower lumbar segments.",critical:false,
+   video:"https://www.youtube.com/results?search_query=supine+knee+to+chest+lumbar+stretch"},
+  {name:"90/90 Hip Mobility", region:"MORNING", sets:3, reps:"8/side", hold:"5s", equipment:"Yoga Mat",
+   notes:"Seated on floor, transition between internal/external rotation positions. Improves hip joint capsule mobility.",critical:false,
+   video:"https://www.youtube.com/results?search_query=90+90+hip+mobility+exercise"},
+  {name:"Thoracic Extension on Foam Roller", region:"MORNING", sets:3, reps:"10", hold:"3s", equipment:"Foam Roller",
+   notes:"Roller perpendicular to spine, T4-T8. Arms across chest. Unlock thoracic stiffness to reduce cervical load.",critical:false,
+   video:"https://www.youtube.com/results?search_query=thoracic+extension+foam+roller+mobilization"},
+  {name:"Ankle Pumps & Circles (Right)", region:"MORNING", sets:2, reps:"20 pumps + 10 circles", hold:"", equipment:"None",
+   notes:"⚠️ DORSIFLEXION MAX 10°. Pump within safe range. Full circles OK. Promotes circulation.",critical:true,
+   video:"https://www.youtube.com/results?search_query=post+achilles+repair+ankle+pumps+rehab"},
+];
+
+const DAYS = [
+  {day:"Monday",short:"MON",focus:"Ankle + Core Foundation",
+   desc:"Lower chain reactivation. Ankle protocol, lumbar core stabilization, hip activation.",
+   exercises:[
+    {name:"McGill Bird Dog",region:"LUMBAR",sets:3,reps:"10/side",hold:"10s",equipment:"Yoga Mat",
+     notes:"Spine neutral. Extend opposite arm/leg simultaneously. Hold 10s. Gold standard lumbar stabilizer.",critical:false,
+     video:"https://www.youtube.com/results?search_query=McGill+bird+dog+lumbar+rehab"},
+    {name:"Dead Bug",region:"LUMBAR",sets:3,reps:"10/side",hold:"",equipment:"Yoga Mat",
+     notes:"Press lower back into floor. Extend opposite arm/leg slow. 4-second descent. Anti-extension core control.",critical:false,
+     video:"https://www.youtube.com/results?search_query=dead+bug+exercise+lumbar+spine+rehab"},
+    {name:"Glute Bridge",region:"HIP",sets:3,reps:"15",hold:"2s at top",equipment:"Yoga Mat",
+     notes:"Drive through left heel only — keep right ankle unloaded if needed. Maximally activates glutes to decompress lumbar.",critical:false,
+     video:"https://www.youtube.com/results?search_query=glute+bridge+rehabilitation+lumbar"},
+    {name:"Side-Lying Hip Abduction",region:"HIP",sets:3,reps:"15/side",hold:"1s",equipment:"None",
+     notes:"Slight forward hip tilt. Target glute medius. Critical for knee valgus control and IT band relief.",critical:false,
+     video:"https://www.youtube.com/results?search_query=side+lying+hip+abduction+glute+med+exercise"},
+    {name:"Ankle Towel Scrunches (Right)",region:"ANKLE",sets:3,reps:"20",hold:"",equipment:"Towel",
+     notes:"Place small towel under right foot. Scrunch with toes. Intrinsic foot muscle activation. Early tendon load.",critical:false,
+     video:"https://www.youtube.com/results?search_query=toe+towel+scrunches+foot+rehab+achilles"},
+    {name:"Single Leg Balance in CAM Boot (Right)",region:"ANKLE",sets:3,reps:"20s",hold:"20s",equipment:"None",
+     notes:"⚠️ IN BOOT ONLY. Eyes open first, progress to eyes closed. Proprioception restoration per post-Achilles protocol.",critical:true,
+     video:"https://www.youtube.com/results?search_query=single+leg+balance+achilles+repair+rehab+CAM+boot"},
+    {name:"Stationary Bike (Flat Foot)",region:"ANKLE",sets:1,reps:"15 min",hold:"",equipment:"Stationary Bike",
+     notes:"⚠️ NO toe push-off. Flat foot pedaling only. Low resistance. As prescribed in PT order. Circulation + ROM.",critical:true,
+     video:"https://www.youtube.com/results?search_query=stationary+bike+achilles+repair+rehab+protocol"},
+    {name:"Ice & Elevation (Right Ankle)",region:"ANKLE",sets:1,reps:"20 min",hold:"",equipment:"Ice Pack",
+     notes:"Elevate foot above heart level. Ice 20 min. Post every session. Edema control is critical for healing.",critical:false,
+     video:"https://www.youtube.com/results?search_query=RICE+protocol+ankle+edema+control"},
+  ]},
+  {day:"Tuesday",short:"TUE",focus:"Right Knee Rehabilitation",
+   desc:"Meniscus & ACL protection protocol. Quad re-activation, controlled loading, no cutting or pivoting.",
+   exercises:[
+    {name:"Quad Sets (Isometric)",region:"RIGHT_KNEE",sets:3,reps:"15",hold:"5s",equipment:"Yoga Mat",
+     notes:"Leg flat. Press knee into floor. Activate VMO. First step in meniscus-safe quad re-activation.",critical:false,
+     video:"https://www.youtube.com/results?search_query=quad+sets+isometric+knee+rehab"},
+    {name:"Straight Leg Raise (Right)",region:"RIGHT_KNEE",sets:3,reps:"15",hold:"1s",equipment:"None",
+     notes:"Lock knee fully extended before raising. No knee bend during lift. Safe quad loading with meniscus tear.",critical:false,
+     video:"https://www.youtube.com/results?search_query=straight+leg+raise+knee+rehab+meniscus"},
+    {name:"Short Arc Quads",region:"RIGHT_KNEE",sets:3,reps:"15",hold:"2s at top",equipment:"Towel",
+     notes:"Roll towel under knee at 40°. Extend from 40° to full extension only. Safe terminal extension zone for ACL/meniscus.",critical:false,
+     video:"https://www.youtube.com/results?search_query=short+arc+quads+knee+rehabilitation"},
+    {name:"Terminal Knee Extension (TKE)",region:"RIGHT_KNEE",sets:3,reps:"20",hold:"2s",equipment:"Resistance Band",
+     notes:"Band behind knee, slight bend. Drive into full extension. Best closed-chain quad exercise for partial ACL tears.",critical:false,
+     video:"https://www.youtube.com/results?search_query=terminal+knee+extension+TKE+band+ACL+rehab"},
+    {name:"Mini Wall Squat (0–45°)",region:"RIGHT_KNEE",sets:3,reps:"15",hold:"2s",equipment:"Wall",
+     notes:"⚠️ MAX 45° knee bend. No deeper. Back flat on wall. Protect medial meniscus from compression.",critical:true,
+     video:"https://www.youtube.com/results?search_query=wall+squat+45+degrees+knee+meniscus+rehab"},
+    {name:"Step-Up 4-inch (Right Lead)",region:"RIGHT_KNEE",sets:3,reps:"12/side",hold:"",equipment:"Step/Box",
+     notes:"⚠️ 4-inch step max. Step with right foot, drive through heel. Functional quad loading within safe range.",critical:true,
+     video:"https://www.youtube.com/results?search_query=step+up+exercise+knee+rehab+meniscus"},
+    {name:"Stationary Bike (Right Knee)",region:"RIGHT_KNEE",sets:1,reps:"15 min",hold:"",equipment:"Stationary Bike",
+     notes:"Raise seat high to minimize knee flexion (< 60°). Low resistance. Best low-impact for meniscus/ACL rehab.",critical:false,
+     video:"https://www.youtube.com/results?search_query=stationary+bike+meniscus+tear+knee+rehab"},
+  ]},
+  {day:"Wednesday",short:"WED",focus:"Spine & Cervical Protocol",
+   desc:"Targeted cervical and lumbar disc rehab. Deep neck flexors, thoracic mobility, anti-flexion core.",
+   exercises:[
+    {name:"Deep Neck Flexor Activation",region:"CERVICAL",sets:3,reps:"10",hold:"10s",equipment:"None",
+     notes:"Supine. Chin tuck + very slight head lift (1 cm off floor). Activates longus colli/capitis. C5-C6 disc protection.",critical:false,
+     video:"https://www.youtube.com/results?search_query=deep+neck+flexor+activation+exercise+cervical+disc"},
+    {name:"Cervical Side-Glide (Lateral Shift)",region:"CERVICAL",sets:3,reps:"10/side",hold:"2s",equipment:"None",
+     notes:"Slide head directly sideways (not tilt). Gentle nerve mobilization for C5-C6 foraminal narrowing. McKenzie method.",critical:false,
+     video:"https://www.youtube.com/results?search_query=cervical+lateral+glide+McKenzie+nerve+mob+C5+C6"},
+    {name:"Scapular Retraction with Band",region:"CERVICAL",sets:3,reps:"15",hold:"2s",equipment:"Resistance Band",
+     notes:"Elbows at 90°. Pull band apart. Retract scapulae fully. Reduces forward head posture load on C4-C7 discs.",critical:false,
+     video:"https://www.youtube.com/results?search_query=scapular+retraction+resistance+band+cervical+posture"},
+    {name:"Prone Cobra (McKenzie Press-Up)",region:"CERVICAL",sets:3,reps:"10",hold:"5s",equipment:"Yoga Mat",
+     notes:"Hands under shoulders. Press up with arms, let hips sag. Extension-based. Reduces posterior disc herniation pressure.",critical:false,
+     video:"https://www.youtube.com/results?search_query=McKenzie+prone+cobra+cervical+disc+herniation"},
+    {name:"Wall Angels",region:"CERVICAL",sets:3,reps:"10",hold:"1s",equipment:"Wall",
+     notes:"Back flat on wall. Slide arms up in Y-position. Thoracic mobilization + lower trapezius activation.",critical:false,
+     video:"https://www.youtube.com/results?search_query=wall+angels+exercise+thoracic+cervical+posture"},
+    {name:"McGill Modified Curl-Up",region:"LUMBAR",sets:3,reps:"10",hold:"10s",equipment:"Yoga Mat",
+     notes:"One knee bent, hand under lumbar curve. Lift head/shoulders ONLY 2 inches. No spinal flexion. Pure anti-flexion stabilizer.",critical:false,
+     video:"https://www.youtube.com/results?search_query=McGill+modified+curl+up+lumbar+spine+exercise"},
+    {name:"Side-Lying McGill Side Plank (Modified)",region:"LUMBAR",sets:3,reps:"20s/side",hold:"20s",equipment:"Yoga Mat",
+     notes:"On knees (not feet) for modified version. Keep hip stacked. Lateral stabilization for L4-5 and L5-S1.",critical:false,
+     video:"https://www.youtube.com/results?search_query=McGill+side+plank+modified+knees+lumbar+rehab"},
+    {name:"Hip Flexor Kneeling Stretch",region:"HIP",sets:3,reps:"30s/side",hold:"30s",equipment:"Yoga Mat",
+     notes:"Half-kneeling. Posterior pelvic tilt first THEN lean forward. Tight hip flexors worsen L4-5 disc stress.",critical:false,
+     video:"https://www.youtube.com/results?search_query=kneeling+hip+flexor+stretch+lumbar+spine+relief"},
+  ]},
+  {day:"Thursday",short:"THU",focus:"Left Knee & IT Band",
+   desc:"Lateral knee pain protocol. IT band release, hip abductor strengthening, VMO activation.",
+   exercises:[
+    {name:"IT Band Foam Roll",region:"LEFT_KNEE",sets:2,reps:"90s/side",hold:"",equipment:"Foam Roller",
+     notes:"Roll from hip to just above knee. STOP at lateral knee — avoid rolling directly over IT band attachment. Pause on tender spots.",critical:false,
+     video:"https://www.youtube.com/results?search_query=IT+band+foam+roll+technique+lateral+knee+pain"},
+    {name:"TFL Stretch (Standing Figure-4)",region:"LEFT_KNEE",sets:3,reps:"30s/side",hold:"30s",equipment:"Wall",
+     notes:"Stand. Cross affected leg behind. Lean laterally away. Direct stretch for TFL/IT band origin. Lateral knee relief.",critical:false,
+     video:"https://www.youtube.com/results?search_query=TFL+IT+band+standing+stretch+lateral+knee"},
+    {name:"Clamshell with Band",region:"LEFT_KNEE",sets:3,reps:"20/side",hold:"1s",equipment:"Resistance Band",
+     notes:"Band above knees. Side-lying, hips at 45°. Open top knee like a clamshell. Glute med activation = IT band tension reduction.",critical:false,
+     video:"https://www.youtube.com/results?search_query=clamshell+exercise+resistance+band+IT+band+hip"},
+    {name:"Lateral Band Walk",region:"LEFT_KNEE",sets:3,reps:"15 steps/dir",hold:"",equipment:"Resistance Band",
+     notes:"Band above knees. Slight squat position. Step lateral, maintain tension. Controls knee valgus and lateral knee stress.",critical:false,
+     video:"https://www.youtube.com/results?search_query=lateral+band+walk+hip+abductor+IT+band+knee"},
+    {name:"VMO Split Squat (Left Lead)",region:"LEFT_KNEE",sets:3,reps:"12/side",hold:"2s",equipment:"None",
+     notes:"Left foot forward, right back. Drive knee over 2nd toe. VMO emphasis at terminal extension. Controls lateral patellar tracking.",critical:false,
+     video:"https://www.youtube.com/results?search_query=VMO+split+squat+knee+tracking+lateral+pain"},
+    {name:"Copenhagen Plank (Modified)",region:"LEFT_KNEE",sets:3,reps:"20s/side",hold:"20s",equipment:"Step/Box",
+     notes:"Side plank with top foot on bench. Bottom leg free. Adductor loading. Research shows adductor weakness = lateral knee overload.",critical:false,
+     video:"https://www.youtube.com/results?search_query=Copenhagen+plank+modified+hip+adductor+exercise"},
+    {name:"Pigeon Stretch (Hip ER)",region:"HIP",sets:3,reps:"60s/side",hold:"60s",equipment:"Yoga Mat",
+     notes:"Deep glute/piriformis stretch. Tight piriformis compresses sciatic nerve + worsens lateral knee tension via TFL compensation.",critical:false,
+     video:"https://www.youtube.com/results?search_query=pigeon+stretch+piriformis+hip+mobility"},
+    {name:"Single Leg Balance (Left, Eyes Closed)",region:"LEFT_KNEE",sets:3,reps:"30s",hold:"30s",equipment:"None",
+     notes:"Slight knee bend (15°). Progress from eyes open → closed → unstable surface. Neuromuscular control reduces lateral knee stress.",critical:false,
+     video:"https://www.youtube.com/results?search_query=single+leg+balance+proprioception+knee+rehab"},
+  ]},
+  {day:"Friday",short:"FRI",focus:"Full Integration + Proprioception",
+   desc:"Multi-region coordination day. Balance, neuromuscular control, functional movement patterns.",
+   exercises:[
+    {name:"Scar Massage (Right Ankle)",region:"ANKLE",sets:1,reps:"3-5 min",hold:"",equipment:"Towel",
+     notes:"Post-PT instruction. Apply gentle circular pressure around scar. Mobilize scar tissue per PT prescription. Reduces adhesions.",critical:false,
+     video:"https://www.youtube.com/results?search_query=scar+massage+achilles+repair+technique"},
+    {name:"Seated Calf Raises - Plantar Flexion Only (Right)",region:"ANKLE",sets:3,reps:"15",hold:"1s",equipment:"None",
+     notes:"⚠️ ONLY plantar flexion range. NO dorsiflexion past 10°. Seated, no body weight. Begin tendon loading gently.",critical:true,
+     video:"https://www.youtube.com/results?search_query=seated+calf+raise+week+4+achilles+repair+protocol"},
+    {name:"Hip 90/90 Active Rotation",region:"HIP",sets:3,reps:"10/side",hold:"5s",equipment:"Yoga Mat",
+     notes:"Add active internal/external rotation transitions. Drives hip capsule mobility that reduces knee and lumbar compensation.",critical:false,
+     video:"https://www.youtube.com/results?search_query=hip+90+90+active+rotation+hip+mobility"},
+    {name:"Hip Airplane (Left Leg Dominant)",region:"HIP",sets:3,reps:"10/side",hold:"3s",equipment:"None",
+     notes:"Stand on left leg. Hinge at hip, rotate torso. Glute med + hip ER pattern. Reduces lateral knee compensations.",critical:false,
+     video:"https://www.youtube.com/results?search_query=hip+airplane+exercise+hip+stability+knee"},
+    {name:"Single-Leg Glute Bridge (Left)",region:"HIP",sets:3,reps:"12/side",hold:"2s",equipment:"Yoga Mat",
+     notes:"Left leg only. Right ankle off-loaded. Drive hip to full extension. Maximizes glute loading without spinal stress.",critical:false,
+     video:"https://www.youtube.com/results?search_query=single+leg+glute+bridge+hip+strengthening"},
+    {name:"Pallof Press (Tall Kneeling)",region:"LUMBAR",sets:3,reps:"12/side",hold:"3s",equipment:"Resistance Band",
+     notes:"Kneel perpendicular to band anchor. Press out, resist rotation. Anti-rotation core — integrates cervical and lumbar stability.",critical:false,
+     video:"https://www.youtube.com/results?search_query=Pallof+press+tall+kneeling+core+anti+rotation"},
+    {name:"Cervical Rotation AROM",region:"CERVICAL",sets:3,reps:"10/side",hold:"3s",equipment:"None",
+     notes:"Seated, neutral spine. Gentle rotation end-range. Stay within pain-free range. Maintains C5-C6 neural mobility.",critical:false,
+     video:"https://www.youtube.com/results?search_query=cervical+rotation+AROM+C5+C6+disc+herniation+exercise"},
+    {name:"Stationary Bike — Full Session",region:"RIGHT_KNEE",sets:1,reps:"20 min",hold:"",equipment:"Stationary Bike",
+     notes:"Combined cardiovascular + ankle + knee session. Seat high. Flat foot. Low-moderate resistance.",critical:false,
+     video:"https://www.youtube.com/results?search_query=stationary+bike+low+impact+cardio+knee+ankle+rehab"},
+  ]},
+  {day:"Saturday",short:"SAT",focus:"Active Recovery + Flexibility",
+   desc:"Full body deep stretch, breath work, and neural mobility. Prepare body for next training week.",
+   exercises:[
+    {name:"Doorway Chest Stretch",region:"CERVICAL",sets:3,reps:"45s",hold:"45s",equipment:"None",
+     notes:"Arms at 90°. Step through doorframe. Opens pec minor/anterior chest. Reverses forward head posture that loads C4-C7.",critical:false,
+     video:"https://www.youtube.com/results?search_query=doorway+chest+stretch+cervical+posture+correction"},
+    {name:"Thoracic Extension over Foam Roller (Extended)",region:"CERVICAL",sets:3,reps:"60s",hold:"60s",equipment:"Foam Roller",
+     notes:"Extended duration for deeper tissue reset. Move roller up/down T2-T8 segments slowly.",critical:false,
+     video:"https://www.youtube.com/results?search_query=thoracic+foam+roller+extended+hold+mobility"},
+    {name:"Supine Figure-4 Stretch (Piriformis)",region:"HIP",sets:3,reps:"60s/side",hold:"60s",equipment:"Yoga Mat",
+     notes:"Lying on back. Cross ankle over opposite knee. Pull thigh toward chest. Piriformis + glute med.",critical:false,
+     video:"https://www.youtube.com/results?search_query=supine+figure+4+stretch+piriformis+glute"},
+    {name:"World's Greatest Stretch (Modified)",region:"HIP",sets:3,reps:"5/side",hold:"5s each",equipment:"Yoga Mat",
+     notes:"⚠️ Modified — no dorsiflexion demand on right ankle. Combines hip flexor + thoracic rotation + hip ER in one movement.",critical:true,
+     video:"https://www.youtube.com/results?search_query=world's+greatest+stretch+hip+thoracic+mobility"},
+    {name:"Supine Neural Floss — Sciatic (Left)",region:"LEFT_KNEE",sets:3,reps:"15/side",hold:"",equipment:"Yoga Mat",
+     notes:"Lying on back. Alternately extend knee while flexing foot. Gentle. Mobilizes sciatic nerve tension contributing to lateral knee.",critical:false,
+     video:"https://www.youtube.com/results?search_query=sciatic+nerve+flossing+supine+technique"},
+    {name:"Prone Medial Meniscus Stretch",region:"RIGHT_KNEE",sets:3,reps:"30s",hold:"30s",equipment:"Pillow/Bolster",
+     notes:"Prone. Pillow under knee at 30°. Allow gravity to gently extend. Decompresses medial compartment.",critical:false,
+     video:"https://www.youtube.com/results?search_query=prone+knee+extension+stretch+medial+meniscus+recovery"},
+    {name:"Diaphragmatic Breathing (4-7-8)",region:"LUMBAR",sets:1,reps:"10 cycles",hold:"",equipment:"None",
+     notes:"Inhale 4s, hold 7s, exhale 8s. Activates parasympathetic system. Diaphragm is a primary lumbar spinal stabilizer.",critical:false,
+     video:"https://www.youtube.com/results?search_query=diaphragmatic+breathing+4-7-8+lumbar+stability"},
+    {name:"Elevation + Contrast Protocol (Right Ankle)",region:"ANKLE",sets:1,reps:"20 min",hold:"",equipment:"Ice Pack",
+     notes:"Elevate above heart. Ice 5 min → room temp 5 min × 2. Promotes circulation for edema control end of week.",critical:false,
+     video:"https://www.youtube.com/results?search_query=contrast+therapy+ankle+edema+control+post+surgical"},
+  ]},
+  {day:"Sunday",short:"SUN",focus:"Rest + Gentle Maintenance",
+   desc:"Active rest day. Gentle walking in CAM boot, elevation, and essential maintenance only.",
+   exercises:[
+    {name:"Gentle CAM Boot Walk",region:"ANKLE",sets:1,reps:"10-15 min",hold:"",equipment:"None",
+     notes:"⚠️ IN BOOT. Flat foot strike. Normal gait cadence. Active recovery. Do not overdo it — Achilles is still healing.",critical:true,
+     video:"https://www.youtube.com/results?search_query=gait+training+CAM+boot+achilles+repair+week+4"},
+    {name:"Morning Chin Tucks Only",region:"CERVICAL",sets:2,reps:"10",hold:"3s",equipment:"None",
+     notes:"Maintenance dose only. Keeps C5-C6 neural tissue mobile without loading.",critical:false,
+     video:"https://www.youtube.com/results?search_query=cervical+chin+tuck+maintenance+disc+herniation"},
+    {name:"Supine Hip Mobility Hold",region:"HIP",sets:2,reps:"90s/side",hold:"90s",equipment:"Yoga Mat",
+     notes:"Figure-4 hold. Deep passive stretch. No effort, just breathe. Recovery day hip capsule work.",critical:false,
+     video:"https://www.youtube.com/results?search_query=supine+hip+rotation+passive+stretch+recovery"},
+    {name:"Ice Pack Ankle Elevation",region:"ANKLE",sets:1,reps:"20 min",hold:"",equipment:"Ice Pack",
+     notes:"Final weekly edema flush. Elevate, ice, relax. Set the stage for a strong training week ahead.",critical:false,
+     video:"https://www.youtube.com/results?search_query=ice+elevation+ankle+post+surgical+recovery"},
+  ]},
+];
+
+// State
+let activeDay = 0;
+let activeRegion = "ALL";
+let warnOpen = true;
+let expanded = new Set();
+
+function init() {
+  buildInjuryCards();
+  buildWarnings();
+  buildDayTabs();
+  buildRegionFilters();
+  renderDay();
+}
+
+function buildInjuryCards() {
+  const grid = document.getElementById("injuryGrid");
+  grid.innerHTML = INJURIES.map(c => `
+    <div class="injury-card" style="border-left:3px solid ${c.color};">
+      <div class="injury-label" style="color:${c.color};">${c.label}</div>
+      <div class="injury-detail">${c.detail}</div>
+    </div>`).join("");
+}
+
+function buildWarnings() {
+  const list = document.getElementById("warnList");
+  list.innerHTML = WARNINGS.map(w => `
+    <div class="warn-item" style="border-left:2px solid ${w.color};">
+      <span style="font-size:14px;">${w.icon}</span>
+      <span class="warn-text">${w.text}</span>
+    </div>`).join("");
+}
+
+function toggleWarnings() {
+  warnOpen = !warnOpen;
+  document.getElementById("warnList").style.display = warnOpen ? "" : "none";
+  document.getElementById("warnToggle").textContent = warnOpen ? "▲ HIDE" : "▼ SHOW";
+}
+
+function buildDayTabs() {
+  const tabs = document.getElementById("dayTabs");
+  tabs.innerHTML = DAYS.map((d,i) => `
+    <button class="day-btn${i===activeDay?" active":""}" onclick="selectDay(${i})">${d.short}</button>`).join("");
+}
+
+function selectDay(i) {
+  activeDay = i;
+  activeRegion = "ALL";
+  expanded.clear();
+  buildDayTabs();
+  buildRegionFilters();
+  renderDay();
+}
+
+function buildRegionFilters() {
+  const all = [...MORNING, ...DAYS[activeDay].exercises];
+  const present = new Set(all.map(e => e.region));
+  const filters = document.getElementById("regionFilters");
+  let html = `<button class="region-btn${activeRegion==="ALL"?" active":""}" onclick="filterRegion('ALL')">ALL</button>`;
+  for(const [key,r] of Object.entries(REGIONS)) {
+    if(!present.has(key)) continue;
+    const isActive = activeRegion===key;
+    html += `<button class="region-btn${isActive?" active":""}" onclick="filterRegion('${key}')"
+      style="${isActive?`background:${r.bg};border-color:${r.color}50;color:${r.color};`:""}">
+      ${r.label}</button>`;
+  }
+  filters.innerHTML = html;
+}
+
+function filterRegion(key) {
+  activeRegion = key;
+  expanded.clear();
+  buildRegionFilters();
+  renderDay();
+}
+
+function renderDay() {
+  const day = DAYS[activeDay];
+  const all = [...MORNING, ...day.exercises];
+  const filtered = activeRegion==="ALL" ? all : all.filter(e=>e.region===activeRegion);
+
+  document.getElementById("dayName").textContent = day.day.toUpperCase();
+  document.getElementById("dayFocus").textContent = day.focus;
+  document.getElementById("dayDesc").textContent = day.desc;
+  document.getElementById("dayCount").textContent = all.length;
+
+  let html = "";
+  let pastMorning = false;
+
+  filtered.forEach((ex, i) => {
+    const globalIdx = all.indexOf(ex);
+
+    if(activeRegion==="ALL" && !pastMorning && ex.region!=="MORNING") {
+      pastMorning = true;
+      html += `<div class="section-divider" style="color:#64748B;">
+        <span class="divider-line" style="background:rgba(100,116,139,.2);"></span>
+        ${day.day.toUpperCase()} FOCUSED TRAINING
+        <span class="divider-line" style="background:rgba(100,116,139,.2);"></span>
+      </div>`;
+    }
+
+    if(activeRegion==="ALL" && i===0) {
+      html += `<div class="section-divider" style="color:#F0A500;">
+        <span class="divider-line" style="background:rgba(240,165,0,.2);"></span>
+        DAILY MORNING ROUTINE — EVERY DAY
+        <span class="divider-line" style="background:rgba(240,165,0,.2);"></span>
+      </div>`;
+    }
+
+    html += buildCard(ex, globalIdx);
+  });
+
+  document.getElementById("exerciseList").innerHTML = html;
+}
+
+function buildCard(ex, idx) {
+  const r = REGIONS[ex.region];
+  const open = expanded.has(idx);
+  const eq = EQ[ex.equipment] || "🔧";
+  const borderColor = ex.critical ? "#F59E0B" : r.color;
+
+  let body = "";
+  if(open) {
+    let stats = `
+      <div class="ex-stat" style="background:${r.bg};border:1px solid ${r.color}30;">
+        <span class="ex-stat-num" style="color:${r.color};">${ex.sets}</span>
+        <span class="ex-stat-label">SETS</span>
+      </div>
+      <div class="ex-stat" style="background:${r.bg};border:1px solid ${r.color}30;">
+        <span class="ex-stat-num" style="color:${r.color};">${ex.reps}</span>
+        <span class="ex-stat-label">REPS</span>
+      </div>`;
+    if(ex.hold) stats += `
+      <div class="ex-stat" style="background:${r.bg};border:1px solid ${r.color}30;">
+        <span class="ex-stat-num" style="color:${r.color};">${ex.hold}</span>
+        <span class="ex-stat-label">HOLD</span>
+      </div>`;
+    body = `
+      <div class="ex-body">
+        <div class="ex-notes">${ex.notes}</div>
+        <div class="ex-stats">
+          ${stats}
+          <a href="${ex.video}" target="_blank" class="video-btn">▶ WATCH VIDEO</a>
+        </div>
+      </div>`;
+  }
+
+  return `
+    <div class="ex-card" style="background:${open?`linear-gradient(135deg,${r.bg},rgba(255,255,255,.02))`:"rgba(255,255,255,.03)"};
+      border:1px solid ${open?r.color+"40":"rgba(255,255,255,.07)"};border-left:3px solid ${borderColor};">
+      <button class="ex-header" onclick="toggleCard(${idx})">
+        ${ex.critical?'<span style="font-size:14px;flex-shrink:0;">⚠️</span>':""}
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span class="ex-name">${ex.name}</span>
+            <span class="ex-tag" style="background:${r.bg};color:${r.color};border:1px solid ${r.color}30;">${r.label}</span>
+          </div>
+          <div class="ex-meta">
+            <span class="ex-reps">${ex.sets} × ${ex.reps}${ex.hold?" / hold "+ex.hold:""}</span>
+            <span class="ex-equip">${eq} ${ex.equipment}</span>
+          </div>
+        </div>
+        <span class="ex-chevron">${open?"▲":"▼"}</span>
+      </button>
+      ${body}
+    </div>`;
+}
+
+function toggleCard(idx) {
+  if(expanded.has(idx)) expanded.delete(idx);
+  else expanded.add(idx);
+  renderDay();
+}
+
+init();
+</script>
+</body>
+</html>
