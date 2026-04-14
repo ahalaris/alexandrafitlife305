@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitLife305 — 30-Day Men's HIIT Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#080A0E !important;color:#FFFFFF !important;font-family:'DM Sans',sans-serif;font-weight:400;overflow-x:hidden;scroll-behavior:smooth}
+:root{--A:#FF9A00;--AL:#FFB833;--S:#3A8FD4;--SL:#64B0F0;--R:#FF3A44;--G:#6EC800;--C2:#0E1218;--C3:#141C26;--MID:#8A9BB8;--LT:#D0E0F0}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:999;background:#050709;border-bottom:2px solid rgba(255,154,0,.35);padding:.75rem 1.25rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.nb{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.12em;color:var(--A);cursor:pointer;text-shadow:0 0 14px rgba(255,154,0,.3)}
+.ntab{padding:.38rem .85rem;border-radius:4px;font-size:.72rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;border:1px solid rgba(255,255,255,.14);background:transparent;color:var(--MID);transition:all .2s}
+.ntab:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+.ntab.on{background:var(--A);color:#060810;border-color:var(--A);font-weight:700}
+.ntimer{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--A);margin-left:auto;cursor:pointer;letter-spacing:.1em}
+
+/* HERO */
+.hero{padding:2rem 1.5rem 1.75rem;background:linear-gradient(160deg,#0A0F1A 0%,#06090E 100%);border-bottom:2px solid var(--A)}
+.hbadge{font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--A);display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem}
+.hbadge::before{content:'';width:16px;height:2px;background:var(--A)}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.6rem);letter-spacing:.04em;line-height:.93;margin-bottom:.6rem;color:#fff}
+.hero h1 em{color:var(--A);font-style:normal}
+.hero p{font-size:.88rem;color:#C0D4E8;line-height:1.7;max-width:580px;margin-bottom:1rem}
+.chips{display:flex;flex-wrap:wrap;gap:.35rem}
+.chip{font-size:.67rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:.26rem .65rem;border-radius:3px;border:1px solid}
+
+/* PAGES */
+.pg{display:none;background:#080A0E !important;min-height:100vh;padding:1.25rem}
+.pg.on{display:block}
+
+/* OVERVIEW */
+.scirow{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.75rem;margin-bottom:1.5rem}
+.scicard{background:#0D1520;border-left:4px solid var(--A);border-radius:0 6px 6px 0;padding:.9rem 1rem}
+.scicard.b{border-left-color:var(--SL)}
+.scinum{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;line-height:1;color:var(--A);margin-bottom:.15rem}
+.scicard.b .scinum{color:var(--SL)}
+.scilbl{font-size:.8rem;color:#fff;line-height:1.45;margin-bottom:.25rem}
+.scisrc{font-size:.67rem;color:var(--MID)}
+.sec{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:.04em;color:var(--A);margin:1.25rem 0 .7rem;display:flex;align-items:center;gap:.5rem;text-shadow:0 0 20px rgba(255,154,0,.18)}
+.sec::after{content:'';flex:1;height:1px;background:rgba(255,154,0,.2)}
+table.t{width:100%;border-collapse:collapse;font-size:.85rem;margin-bottom:1.25rem;background:#0C1018}
+table.t th{background:#111C2C;color:var(--A);font-weight:700;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:.7rem .85rem;text-align:left;border-bottom:2px solid rgba(255,154,0,.3)}
+table.t td{padding:.6rem .85rem;border-bottom:1px solid rgba(255,255,255,.07);color:#E0ECFF;vertical-align:top}
+table.t td:first-child{color:var(--A);font-weight:600}
+table.t tr:nth-child(even) td{background:rgba(255,255,255,.03)}
+
+/* CALENDAR */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:.35rem;margin-bottom:1.5rem}
+.dow{font-size:.6rem;color:var(--MID);text-align:center;padding:.2rem;text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.cd{border-radius:5px;cursor:pointer;min-height:66px;display:flex;flex-direction:column;border:1px solid rgba(255,255,255,.07);transition:all .2s;overflow:hidden;position:relative}
+.cd:hover{transform:translateY(-2px);border-color:rgba(255,154,0,.5)}
+.cdn{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.04em;padding:.38rem .42rem .12rem;line-height:1;font-weight:700}
+.cdt{font-size:.54rem;font-weight:600;padding:0 .42rem .38rem;line-height:1.3;text-transform:uppercase;letter-spacing:.04em;color:rgba(255,255,255,.82)}
+.cd.db{background:linear-gradient(135deg,rgba(255,154,0,.2),rgba(255,154,0,.07))}.cd.db .cdn{color:#FF9A00}
+.cd.ba{background:linear-gradient(135deg,rgba(58,143,212,.2),rgba(58,143,212,.07))}.cd.ba .cdn{color:#64B0F0}
+.cd.bw{background:linear-gradient(135deg,rgba(255,58,68,.2),rgba(255,58,68,.07))}.cd.bw .cdn{color:#FF5A62}
+.cd.ru{background:linear-gradient(135deg,rgba(110,200,0,.2),rgba(110,200,0,.07))}.cd.ru .cdn{color:#8EE000}
+.cd.co{background:linear-gradient(135deg,rgba(255,154,0,.16),rgba(58,143,212,.1))}.cd.co .cdn{color:#FFB833}
+.cd.re{background:rgba(255,255,255,.03);cursor:default}.cd.re .cdn{color:#3A4A5A}
+.cd.done::after{content:'✓';position:absolute;top:4px;right:5px;font-size:.68rem;color:#5FEA70;font-weight:700}
+
+/* WORKOUT PAGE */
+.wkback{display:inline-flex;align-items:center;gap:.4rem;padding:.42rem .9rem;border-radius:4px;font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:1px solid rgba(255,255,255,.18);background:transparent;color:var(--MID);transition:all .2s;margin-bottom:1.1rem}
+.wkback:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.wkhead{display:flex;align-items:flex-start;gap:.9rem;margin-bottom:1.25rem;flex-wrap:wrap}
+.wkbadge{background:var(--A);color:#060810;font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.06em;padding:.38rem .75rem;border-radius:4px;white-space:nowrap;align-self:flex-start;font-weight:700}
+.wkmeta h2{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:.04em;line-height:.95;color:var(--A);text-shadow:0 0 22px rgba(255,154,0,.22)}
+.wkmeta p{font-size:.86rem;color:#C0D4E8;line-height:1.6;margin-top:.3rem;max-width:560px}
+.wktags{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.5rem}
+.tag{font-size:.65rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.22rem .55rem;border-radius:3px;border:1px solid}
+
+/* TIMER */
+.tbar{background:#090D16;border:1px solid rgba(255,154,0,.22);border-radius:8px;padding:1.1rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap}
+.tbig{font-family:'Bebas Neue',sans-serif;font-size:3.4rem;letter-spacing:.1em;color:var(--A);line-height:1;min-width:105px;text-shadow:0 0 18px rgba(255,154,0,.35)}
+.tbig.go{color:#5FEA70;text-shadow:0 0 18px rgba(95,234,112,.3);animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.65}}
+.tbtns{display:flex;gap:.4rem;margin-bottom:.35rem}
+.tbtn{padding:.42rem .95rem;border-radius:4px;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:1px solid;transition:all .15s}
+.tbtn.s{background:var(--A);border-color:var(--A);color:#060810}
+.tbtn.s:hover{background:var(--AL)}
+.tbtn.r{background:transparent;border-color:rgba(255,255,255,.18);color:var(--MID)}
+.tbtn.r:hover{color:#fff;border-color:rgba(255,255,255,.35)}
+.pres{display:flex;gap:.22rem;flex-wrap:wrap}
+.pre{padding:.28rem .55rem;border-radius:3px;font-size:.7rem;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--MID);transition:all .18s}
+.pre:hover,.pre.on{background:rgba(255,154,0,.18);color:var(--A);border-color:rgba(255,154,0,.45)}
+.srow{display:flex;align-items:center;gap:.55rem;margin-left:auto}
+.slbl{font-size:.67rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--MID)}
+.sbtns{display:flex;gap:.18rem}
+.sn{width:26px;height:26px;border-radius:3px;font-size:.78rem;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.12);background:transparent;color:#8A9BB8;transition:all .18s;display:flex;align-items:center;justify-content:center}
+.sn:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+.sn.on{background:var(--A);border-color:var(--A);color:#060810}
+.prow{margin-left:auto;text-align:right}
+.plbl{font-size:.65rem;color:var(--MID);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.25rem}
+.ptxt{font-size:.82rem;font-weight:700;color:#fff}
+.ptrack{background:rgba(255,255,255,.1);border-radius:3px;height:5px;width:120px;margin-top:.28rem;overflow:hidden}
+.pfill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--A),var(--AL));transition:width .4s ease}
+
+/* DONE BANNER */
+.dbanner{background:linear-gradient(135deg,rgba(95,234,112,.1),rgba(95,234,112,.04));border:1px solid rgba(95,234,112,.3);border-radius:6px;padding:1.25rem 1.5rem;display:none;align-items:center;gap:1.25rem;margin-bottom:1.25rem}
+.dbanner.on{display:flex}
+.dtitle{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;color:#5FEA70;letter-spacing:.04em}
+.dsub{font-size:.82rem;color:var(--MID);margin-top:.15rem}
+
+/* EXERCISE CARDS */
+.exlist{display:flex;flex-direction:column;gap:.85rem}
+.excard{background:#0E1520;border:1px solid rgba(255,255,255,.1);border-radius:8px;overflow:hidden;transition:border-color .2s}
+.excard:hover{border-color:rgba(255,154,0,.4)}
+.excard.ck{opacity:.55;border-color:rgba(95,234,112,.3)}
+.exhdr{display:flex;align-items:stretch}
+.exnum{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:.04em;padding:.65rem .75rem;display:flex;align-items:center;justify-content:center;min-width:46px;flex-shrink:0;color:#060810;font-weight:700}
+.exnum.db{background:#FF9A00}.exnum.ba{background:#3A8FD4}.exnum.bw{background:#FF3A44}.exnum.ru{background:#6EC800}.exnum.co{background:#FF9A00}
+.exmain{flex:1;padding:.7rem .9rem .55rem}
+.exname{font-family:'Bebas Neue',sans-serif;font-size:1.22rem;letter-spacing:.04em;color:#FFFFFF;margin-bottom:.4rem}
+
+/* STATS BOXES — the key part */
+.exstats{display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:.45rem}
+.stat{display:flex;flex-direction:column;align-items:center;padding:.3rem .5rem;border-radius:5px;min-width:54px;text-align:center}
+.stat.sets{background:rgba(138,155,184,.1);border:1px solid rgba(138,155,184,.22)}
+.stat.wk{background:rgba(255,154,0,.12);border:1px solid rgba(255,154,0,.32)}
+.stat.re{background:rgba(58,143,212,.1);border:1px solid rgba(58,143,212,.28)}
+.stat.reps{background:rgba(95,234,112,.1);border:1px solid rgba(95,234,112,.28)}
+.sv{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;line-height:1.1;letter-spacing:.04em}
+.stat.sets .sv{color:#B0C4DC}
+.stat.wk  .sv{color:#FF9A00}
+.stat.re  .sv{color:#64B0F0}
+.stat.reps .sv{color:#5FEA70}
+.sl{font-size:.55rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-top:.08rem}
+.stat.sets .sl{color:#8A9BB8}
+.stat.wk  .sl{color:rgba(255,154,0,.7)}
+.stat.re  .sl{color:rgba(100,176,240,.7)}
+.stat.reps .sl{color:rgba(95,234,112,.7)}
+
+.excue{font-size:.8rem;color:#B0C4DC;line-height:1.5;font-style:italic;margin-bottom:.3rem}
+.exmuscle{font-size:.7rem;color:var(--MID);font-weight:500}
+
+/* VIDEO + DONE ROW */
+.exfoot{display:flex;align-items:center;gap:.5rem;padding:.55rem .9rem;background:rgba(0,0,0,.38);border-top:1px solid rgba(255,255,255,.07);flex-wrap:wrap}
+.ytbtn{display:inline-flex;align-items:center;gap:.45rem;padding:.4rem 1rem;border-radius:4px;font-size:.73rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;background:rgba(255,0,0,.16);border:1px solid rgba(255,60,60,.42);color:#FF5555;transition:all .2s}
+.ytbtn:hover{background:rgba(255,0,0,.3);color:#FF2020;border-color:rgba(255,80,80,.7)}
+.donebt{margin-left:auto;padding:.4rem .85rem;border-radius:4px;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:1px solid rgba(255,255,255,.18);background:transparent;color:#8A9BB8;transition:all .2s}
+.donebt:hover{background:rgba(95,234,112,.08);color:#5FEA70;border-color:rgba(95,234,112,.3)}
+.excard.ck .donebt{background:rgba(95,234,112,.1);color:#5FEA70;border-color:rgba(95,234,112,.35)}
+
+/* REST DAY */
+.restcard{background:#0C1018;border:1px dashed rgba(255,255,255,.12);border-radius:8px;padding:2rem;text-align:center}
+.resttips{list-style:none;display:flex;flex-direction:column;gap:.4rem;text-align:left;max-width:380px;margin:1rem auto 0}
+.resttips li{font-size:.84rem;color:#A0B4CC;padding-left:1.1rem;position:relative}
+.resttips li::before{content:'›';position:absolute;left:0;color:var(--A);font-weight:700;font-size:1rem}
+
+@media(max-width:580px){
+  .tbar{flex-direction:column;align-items:flex-start}
+  .srow,.prow{margin-left:0}
+  .wkhead{flex-direction:column}
+  .stat{min-width:46px;padding:.25rem .38rem}
+  .sv{font-size:1.1rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nb" onclick="goPage('home')">FitLife305</span>
+  <button class="ntab on"  onclick="goPage('home',this)">Overview</button>
+  <button class="ntab"     onclick="goPage('cal',this)">30-Day Calendar</button>
+  <button class="ntab"     onclick="goPage('nut',this)">Nutrition</button>
+  <span class="ntimer" id="ntimer">⏱ 00:30</span>
+</nav>
+
+<div class="hero" id="hero">
+  <div class="hbadge">FitLife305 · Men's 40+ Series</div>
+  <h1>30-Day Men's<br><em>HIIT Performance</em><br>Program</h1>
+  <p>Dumbbells · Elastic Bands · Bodyweight · Speed Runs — built to burn fat, kill love handles, carve abs, build shoulders and chest, and strengthen legs and glutes.</p>
+  <div class="chips">
+    <span class="chip" style="background:rgba(255,58,68,.15);color:#FF7A80;border-color:rgba(255,58,68,.35)">🔥 Burn Fat &amp; Love Handles</span>
+    <span class="chip" style="background:rgba(255,154,0,.12);color:#FF9A00;border-color:rgba(255,154,0,.3)">💪 Shoulders &amp; Chest</span>
+    <span class="chip" style="background:rgba(58,143,212,.12);color:#64B0F0;border-color:rgba(58,143,212,.3)">🏃 Speed Runs</span>
+    <span class="chip" style="background:rgba(110,200,0,.12);color:#8EE000;border-color:rgba(110,200,0,.3)">🦵 Legs &amp; Glutes</span>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="pg on" id="pg-home">
+  <div class="scirow">
+    <div class="scicard"><div class="scinum">67%</div><div class="scilbl">Less sarcopenia risk with 3–4 resistance sessions/week in men over 40</div><div class="scisrc">JAMA 2024 · 58 studies</div></div>
+    <div class="scicard b"><div class="scinum">17%</div><div class="scilbl">Increase in free testosterone from sprint interval training in men 40–60</div><div class="scisrc">Journal of Sports Science 2024</div></div>
+    <div class="scicard"><div class="scinum">34%</div><div class="scilbl">Greater testosterone response from 2–3 min rest between compound sets</div><div class="scisrc">JSCR 2024</div></div>
+    <div class="scicard b"><div class="scinum">27%</div><div class="scilbl">Greater cumulative strength gains with planned deload weeks</div><div class="scisrc">JSCR 2024</div></div>
+  </div>
+  <div class="sec">Program Structure</div>
+  <table class="t">
+    <tr><th>Week</th><th>Phase</th><th>Focus</th><th>Work / Rest</th></tr>
+    <tr><td>Week 1</td><td>Foundation HIIT</td><td>Learn movements, activate fat burning, build base conditioning</td><td>30s / 20s</td></tr>
+    <tr><td>Week 2</td><td>Power &amp; Speed</td><td>Increase intensity, sprint sessions, raise testosterone</td><td>35s / 15s</td></tr>
+    <tr><td>Week 3</td><td>Intensity Peak</td><td>Maximum effort, compound supersets, peak fat burning</td><td>40s / 12s</td></tr>
+    <tr><td>Week 4</td><td>Burn &amp; Finish</td><td>Full integration, all modalities, 30-day performance test</td><td>45s / 10s</td></tr>
+  </table>
+  <div class="sec">Color Key</div>
+  <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.25rem">
+    <span class="chip" style="background:rgba(255,154,0,.15);color:#FF9A00;border-color:rgba(255,154,0,.3)">🟠 Dumbbell</span>
+    <span class="chip" style="background:rgba(58,143,212,.15);color:#64B0F0;border-color:rgba(58,143,212,.3)">🔵 Elastic Band</span>
+    <span class="chip" style="background:rgba(255,58,68,.15);color:#FF5A62;border-color:rgba(255,58,68,.3)">🔴 Bodyweight</span>
+    <span class="chip" style="background:rgba(110,200,0,.15);color:#8EE000;border-color:rgba(110,200,0,.3)">🟢 Speed Run</span>
+    <span class="chip" style="background:rgba(255,184,51,.12);color:#FFB833;border-color:rgba(255,184,51,.28)">⚡ Combo</span>
+  </div>
+  <div style="text-align:center;padding:1rem 0">
+    <button onclick="goPage('cal',document.querySelectorAll('.ntab')[1])" style="background:var(--A);color:#060810;border:none;padding:.85rem 2.2rem;border-radius:4px;font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:.1em;cursor:pointer;font-weight:700">START THE PROGRAM →</button>
+  </div>
+</div>
+
+<!-- CALENDAR -->
+<div class="pg" id="pg-cal">
+  <div style="margin-bottom:.8rem">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.04em;color:#fff">30-Day <span style="color:var(--A)">Training Calendar</span></div>
+    <div style="font-size:.78rem;color:var(--MID);margin-top:.2rem">Tap any day to open the full workout with exercises, reps, sets &amp; YouTube videos</div>
+  </div>
+  <div class="cal-grid">
+    <div class="dow">Mon</div><div class="dow">Tue</div><div class="dow">Wed</div>
+    <div class="dow">Thu</div><div class="dow">Fri</div><div class="dow">Sat</div><div class="dow">Sun</div>
+  </div>
+  <div class="cal-grid" id="calgrid"></div>
+</div>
+
+<!-- WORKOUT VIEW -->
+<div class="pg" id="pg-wk">
+  <button class="wkback" onclick="goPage('cal')">← Back to Calendar</button>
+  <div class="wkhead">
+    <div class="wkbadge" id="wkbadge">DAY 1</div>
+    <div class="wkmeta">
+      <h2 id="wktitle">Loading...</h2>
+      <p id="wkdesc"></p>
+      <div class="wktags" id="wktags"></div>
+    </div>
+  </div>
+  <div class="dbanner" id="dbanner">
+    <div style="font-size:2.2rem">🏆</div>
+    <div><div class="dtitle">Day Complete!</div><div class="dsub">Rest 24–48 hours. Sleep 7–9 hours tonight.</div></div>
+  </div>
+  <div class="tbar">
+    <div class="tbig" id="tdisp">00:30</div>
+    <div>
+      <div class="tbtns">
+        <button class="tbtn s" id="tgo" onclick="tToggle()">Start</button>
+        <button class="tbtn r" onclick="tReset()">Reset</button>
+      </div>
+      <div class="pres">
+        <button class="pre on" onclick="setPre(30,this)">30s</button>
+        <button class="pre" onclick="setPre(45,this)">45s</button>
+        <button class="pre" onclick="setPre(60,this)">60s</button>
+        <button class="pre" onclick="setPre(90,this)">90s</button>
+        <button class="pre" onclick="setPre(120,this)">2min</button>
+        <button class="pre" onclick="setPre(180,this)">3min</button>
+      </div>
+    </div>
+    <div class="srow">
+      <span class="slbl">Sets</span>
+      <div class="sbtns" id="sbtns"></div>
+    </div>
+    <div class="prow">
+      <div class="plbl">Progress</div>
+      <div class="ptxt" id="ptxt">0 / 0</div>
+      <div class="ptrack"><div class="pfill" id="pfill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div class="sec" id="exlbl">Exercises</div>
+  <div class="exlist" id="exlist"></div>
+</div>
+
+<!-- NUTRITION -->
+<div class="pg" id="pg-nut">
+  <div class="sec">Daily Nutrition Targets</div>
+  <table class="t">
+    <tr><th>Bodyweight</th><th>Calories</th><th>Protein</th><th>Carbs</th><th>Fats</th></tr>
+    <tr><td>Under 175 lbs</td><td>2,000</td><td>185g</td><td>190g</td><td>65g</td></tr>
+    <tr><td>175–210 lbs</td><td>2,300</td><td>210g</td><td>215g</td><td>75g</td></tr>
+    <tr><td>Over 210 lbs</td><td>2,600</td><td>235g</td><td>240g</td><td>85g</td></tr>
+  </table>
+  <div class="sec">7 Rules</div>
+  <table class="t">
+    <tr><th>#</th><th>Rule</th></tr>
+    <tr><td>1</td><td>Eat 40–50g protein at every meal — anabolic resistance after 40 means every meal must trigger muscle protein synthesis</td></tr>
+    <tr><td>2</td><td>30–40g carbs 30–45 min before HIIT — glycogen is your fuel, never train on empty</td></tr>
+    <tr><td>3</td><td>40–50g protein + 50g carbs within 45 min post-training — highest MPS window of the day</td></tr>
+    <tr><td>4</td><td>Keep dietary fat at 30–35% of total calories — testosterone is synthesized from cholesterol, never drop fat below 65g/day</td></tr>
+    <tr><td>5</td><td>Drink 3–4 liters of water daily — HIIT dehydration reduces power output by up to 20%</td></tr>
+    <tr><td>6</td><td>Maximum 1–2 drinks per week — alcohol suppresses testosterone for 24–72 hours</td></tr>
+    <tr><td>7</td><td>Never drop below 1,800 calories/day at this volume — severe restriction burns muscle not fat</td></tr>
+  </table>
+  <div class="sec">Supplements</div>
+  <table class="t">
+    <tr><th>Supplement</th><th>Dose</th><th>Benefit</th></tr>
+    <tr><td>Creatine Monohydrate</td><td>5g daily</td><td>Power output, lean mass, bone density, cognitive function</td></tr>
+    <tr><td>Vitamin D3 + K2</td><td>3,000 IU + 100mcg with fat</td><td>Testosterone support — D3 deficiency directly suppresses T</td></tr>
+    <tr><td>Omega-3 EPA+DHA</td><td>3–4g with meals</td><td>Reduces inflammation, improves testosterone, speeds recovery</td></tr>
+    <tr><td>Magnesium Glycinate</td><td>400mg before bed</td><td>Deep sleep, cortisol reduction, testosterone support</td></tr>
+    <tr><td>Zinc</td><td>25–40mg with food</td><td>Critical testosterone biosynthesis — depleted by intense training</td></tr>
+    <tr><td>Ashwagandha KSM-66</td><td>600mg daily</td><td>Reduces cortisol 27–30%, boosts free testosterone 15–17%</td></tr>
+  </table>
+</div>
+
+<script>
+const YT = q => 'https://www.youtube.com/results?search_query=' + encodeURIComponent(q + ' exercise form tutorial');
+
+const DAYS = [
+// W1 ─────────────────────────────────────────────────────
+{n:1,t:'db',title:'Dumbbell Full Body',phase:'Week 1 · Foundation',dur:'40 min',
+ desc:'Foundation session — learn every movement in this program. Focus on perfect form. 30s work, 20s rest. 3 sets per exercise.',
+ goals:['Full Body','Love Handles','Chest','Shoulders'],
+ exs:[
+  {e:'Goblet Squat',         s:3,r:'10–12',w:'30s',rs:'20s',c:'Heels shoulder-width, chest tall — full depth activates legs and glutes completely',m:'Quads · Glutes · Core',y:YT('dumbbell goblet squat')},
+  {e:'Renegade Row',         s:3,r:'8 ea.',w:'30s',rs:'20s',c:'Plank on DBs, row one arm — directly attacks love handles and lats simultaneously',m:'Back · Core · Obliques',y:YT('dumbbell renegade row')},
+  {e:'DB Push Press',        s:3,r:'10–12',w:'30s',rs:'20s',c:'Quarter knee dip then explosively drive DBs overhead — builds shoulder size fast',m:'Shoulders · Chest · Triceps',y:YT('dumbbell push press shoulders')},
+  {e:'Romanian Deadlift',    s:3,r:'10–12',w:'30s',rs:'20s',c:'Hinge at hips, feel hamstrings stretch fully — never round the lower back',m:'Hamstrings · Glutes · Lower Back',y:YT('dumbbell romanian deadlift form')},
+  {e:'Russian Twist',        s:3,r:'20 total',w:'30s',rs:'20s',c:'Hold one DB, rotate fully side to side — most direct love handle exercise in program',m:'Obliques · Love Handles · Abs',y:YT('dumbbell russian twist obliques')},
+  {e:'Lateral Raise',        s:3,r:'12–15',w:'30s',rs:'20s',c:'Arms straight to shoulder height, pause at top — zero momentum, pure medial delt',m:'Medial Deltoids · Shoulder Width',y:YT('dumbbell lateral raise proper form')},
+ ]},
+{n:2,t:'ba',title:'Elastic Band Row Circuit',phase:'Week 1 · Foundation',dur:'38 min',
+ desc:'Band day targets your back, biceps, and rear delts. Each row variation hits a different pulling angle for complete upper back development.',
+ goals:['Back','Biceps','Posture','Upper Body'],
+ exs:[
+  {e:'Seated Band Row',      s:3,r:'12–15',w:'30s',rs:'20s',c:'Anchor at foot level, pull to lower chest — full scapular retraction at peak',m:'Lats · Rhomboids · Mid Back',y:YT('resistance band seated row form')},
+  {e:'Band Face Pull',       s:3,r:'15',w:'30s',rs:'20s',c:'Anchor at face height, pull to cheeks, elbows high — #1 shoulder health movement',m:'Rear Delts · Rotator Cuff',y:YT('resistance band face pull form tutorial')},
+  {e:'Band Squat to Press',  s:3,r:'12',w:'30s',rs:'20s',c:'Band under feet — squat deep then press overhead as you stand up',m:'Legs · Shoulders · Core',y:YT('resistance band squat to press')},
+  {e:'Banded Hip Thrust',    s:3,r:'15–20',w:'30s',rs:'20s',c:'Band across hips — full glute squeeze, hold 1 second at the top every rep',m:'Glutes · Hamstrings',y:YT('resistance band hip thrust glutes')},
+  {e:'Band Bicep Curl',      s:3,r:'12–15',w:'30s',rs:'20s',c:'Band under feet — strict curl, no swing, 3-count slow eccentric lowering phase',m:'Biceps · Forearms',y:YT('resistance band bicep curl form')},
+  {e:'Lateral Band Walk',    s:3,r:'15 ea.',w:'30s',rs:'20s',c:'Band at ankles, stay in squat — slow controlled lateral steps burn glute medius',m:'Glute Medius · Hip Abductors',y:YT('resistance band lateral walk glute medius')},
+ ]},
+{n:3,t:'ru',title:'Foundation Speed Runs',phase:'Week 1 · Foundation',dur:'35 min',
+ desc:'Speed day — highest testosterone boost of the week. Start at 70% effort today and focus on sprint mechanics over raw speed.',
+ goals:['Testosterone','Fat Burn','Speed','Cardio'],
+ exs:[
+  {e:'5-Min Warm-Up Jog',    s:1,r:'5 min',w:'5 min',rs:'—',c:'Easy conversational pace — loosen hips, ankles, and Achilles completely',m:'Full Body Activation',y:YT('running warm up routine jog drills')},
+  {e:'High Knees Drill',     s:4,r:'20 sec',w:'20s',rs:'30s',c:'Knees to hip height, pump arms aggressively — drills sprint mechanics',m:'Hip Flexors · Calves · Core',y:YT('high knees sprint drill technique')},
+  {e:'Butt Kicks Drill',     s:4,r:'20 sec',w:'20s',rs:'30s',c:'Heel to glute rapidly — trains the hamstring recovery phase of every stride',m:'Hamstrings · Calves',y:YT('butt kicks running drill tutorial')},
+  {e:'20m Acceleration Runs',s:6,r:'20m each',w:'20m',rs:'60s walk',c:'Build from 60% to 85% effort across 6 reps — accelerate through finish',m:'Full Body · Quads · Glutes',y:YT('20 meter acceleration sprint drill')},
+  {e:'Broad Jump Series',    s:4,r:'3 jumps',w:'3 jumps',rs:'60s',c:'Max distance each jump, soft landing — builds explosive leg drive for sprinting',m:'Quads · Glutes · Calves · Power',y:YT('broad jump series explosive training')},
+  {e:'Cool-Down Walk',       s:1,r:'3 min',w:'3 min',rs:'—',c:'Easy walk, breathe through nose — shake both legs completely before stopping',m:'Active Recovery',y:YT('post sprint cool down walk')},
+ ]},
+{n:4,t:'bw',title:'Abs & Love Handle HIIT',phase:'Week 1 · Foundation',dur:'35 min',
+ desc:'Pure bodyweight midsection circuit. Every exercise directly targets obliques, abs, and love handles. No equipment — 100% core activation.',
+ goals:['Abs','Love Handles','Core','Obliques'],
+ exs:[
+  {e:'Mountain Climbers',    s:4,r:'30 sec',w:'30s',rs:'20s',c:'Neutral spine, drive knees to chest fast — hips flat, core locked the entire time',m:'Core · Abs · Shoulders',y:YT('mountain climbers core exercise form')},
+  {e:'Bicycle Crunches',     s:4,r:'20 total',w:'30s',rs:'20s',c:'2-second rotation each side, slow and deliberate — feel oblique crunch fully',m:'Obliques · Love Handles · Abs',y:YT('bicycle crunch obliques slow form')},
+  {e:'Jump Squats',          s:4,r:'12–15',w:'30s',rs:'20s',c:'Full squat depth, explosive jump, land softly through forefoot — legs and cardio',m:'Quads · Glutes · Calves',y:YT('jump squats HIIT explosive form')},
+  {e:'Plank Hip Dips',       s:4,r:'20 total',w:'30s',rs:'20s',c:'Forearm plank, rotate hips to tap floor each side — pure oblique isolation',m:'Obliques · Love Handles · Core',y:YT('plank hip dips obliques tutorial')},
+  {e:'Reverse Lunge + Drive',s:4,r:'10 ea.',w:'30s',rs:'20s',c:'Step back, deep lunge, drive knee explosively forward on the return phase',m:'Glutes · Quads · Hip Flexors',y:YT('reverse lunge knee drive exercise form')},
+  {e:'Burpees',              s:3,r:'8–10',w:'30s',rs:'20s',c:'Full push-up at bottom, jump with hands overhead at top — complete form every rep',m:'Full Body · Cardio',y:YT('burpee proper form complete tutorial')},
+ ]},
+{n:5,t:'co',title:'DB + Band: Chest & Shoulders',phase:'Week 1 · Foundation',dur:'45 min',
+ desc:'Superset pairs — one DB push immediately followed by one band pull. No rest between the pair. 15 seconds rest after each complete superset.',
+ goals:['Chest','Shoulders','Upper Body','Definition'],
+ exs:[
+  {e:'DB Floor Chest Press', s:4,r:'10–12',w:'30s',rs:'15s',c:'Full range on floor — press to lockout, lower until triceps touch floor completely',m:'Chest · Triceps · Front Delts',y:YT('dumbbell floor press chest form')},
+  {e:'Band Pull-Apart ↑',    s:4,r:'15',w:'30s',rs:'15s',c:'(SUPERSET) Arms straight at chest height, pull apart to full wingspan — rear delts',m:'Rear Delts · Upper Back',y:YT('resistance band pull apart rear delts')},
+  {e:'DB Arnold Press',      s:4,r:'10–12',w:'30s',rs:'15s',c:'Start palms in, rotate outward as you press overhead — all 3 delt heads every rep',m:'All 3 Deltoid Heads · Traps',y:YT('arnold press dumbbell all three deltoid heads')},
+  {e:'Band Face Pull ↑',     s:4,r:'15',w:'30s',rs:'15s',c:'(SUPERSET) Pull to cheeks, elbows wide and high — external rotation emphasis',m:'Rear Delts · Rotator Cuff',y:YT('band face pull external rotation form')},
+  {e:'DB Lateral + Front',   s:3,r:'10 ea.',w:'30s',rs:'15s',c:'Alternate lateral then front raise — slow and controlled, zero momentum',m:'Medial and Front Deltoids',y:YT('lateral raise front raise alternate dumbbell')},
+  {e:'Band Upright Row ↑',   s:3,r:'15',w:'30s',rs:'15s',c:'(SUPERSET) Band under feet, pull to chin, elbows lead upward — traps and medial delt',m:'Traps · Medial Delts · Biceps',y:YT('resistance band upright row traps')},
+ ]},
+{n:6,t:'co',title:'Full Circuit — Weekly Fat Burn',phase:'Week 1 · Foundation',dur:'45 min',
+ desc:'Day 6 is the weekly calorie burn — all four modalities. Push harder than any previous session. Highest-calorie workout of the week.',
+ goals:['Fat Burn','Full Body','Cardio','Core'],
+ exs:[
+  {e:'DB Thrusters',         s:4,r:'10–12',w:'30s',rs:'20s',c:'Goblet squat into overhead press in one fluid motion — highest metabolic cost move',m:'Full Body · Shoulders · Legs',y:YT('dumbbell thruster squat press HIIT')},
+  {e:'Band Bent-Over Row',   s:4,r:'12–15',w:'30s',rs:'20s',c:'Band under feet, hinge 45°, row to hips — flat back every single rep',m:'Lats · Rhomboids · Biceps',y:YT('resistance band bent over row form')},
+  {e:'Renegade Row',         s:4,r:'8 ea.',w:'30s',rs:'20s',c:'Push-up position on DBs — row one arm, core cannot rotate at all',m:'Back · Core · Obliques',y:YT('renegade row dumbbell core form')},
+  {e:'20m Sprint Shuttle',   s:5,r:'40m ea.',w:'40m',rs:'60s',c:'Sprint 20m, touch line, sprint back = 40m total per rep — maximum effort',m:'Full Body · Legs · Cardio',y:YT('20 meter shuttle run sprint')},
+  {e:'Russian Twist Heavy',  s:3,r:'20 total',w:'30s',rs:'20s',c:'Heavy single DB, slow deliberate rotation — feel every oblique contraction',m:'Obliques · Love Handles',y:YT('heavy russian twist obliques slow')},
+  {e:'Banded Squat Jump',    s:3,r:'12–15',w:'30s',rs:'20s',c:'Band under feet — squat deep, explode hard against band resistance at peak',m:'Legs · Glutes · Explosive Power',y:YT('banded squat jump resistance explosive')},
+ ]},
+{n:7,t:'re',title:'Active Recovery',phase:'Week 1 · Rest Day',dur:'Optional',goals:['Recovery'],exs:[]},
+// W2 ─────────────────────────────────────────────────────
+{n:8,t:'db',title:'Dumbbell Power Circuit',phase:'Week 2 · Power & Speed',dur:'45 min',
+ desc:'35 seconds on, 15 seconds rest. Power movements. Expect this to feel significantly harder than Week 1 — that is exactly the point.',
+ goals:['Power','Shoulders','Upper Body','Fat Burn'],
+ exs:[
+  {e:'Hang Clean to Press',  s:4,r:'8–10',w:'35s',rs:'15s',c:'Hip hinge, explosive pull to shoulders, press overhead — one connected chain',m:'Full Body · Shoulders · Traps',y:YT('dumbbell hang clean and press tutorial')},
+  {e:'Bulgarian Split Squat',s:4,r:'8 ea.',w:'35s',rs:'15s',c:'Rear foot elevated on chair, deep front lunge — best single-leg glute sculptor',m:'Quads · Glutes · Balance',y:YT('dumbbell bulgarian split squat form')},
+  {e:'Bent-Over Row Fast',   s:4,r:'12',w:'35s',rs:'15s',c:'Both DBs simultaneously to lower chest — explosive concentric, controlled eccentric',m:'Lats · Rhomboids · Biceps',y:YT('dumbbell bent over row explosive power')},
+  {e:'Curl to Press',        s:4,r:'10',w:'35s',rs:'15s',c:'Curl fully to shoulder then press overhead — complete arm chain in one movement',m:'Biceps · Shoulders · Triceps',y:YT('dumbbell curl to overhead press tutorial')},
+  {e:'Reverse Lunge + Curl', s:4,r:'10 ea.',w:'35s',rs:'15s',c:'Step back into lunge, curl DBs as you return to standing — compound movement',m:'Quads · Glutes · Biceps',y:YT('reverse lunge with bicep curl dumbbell')},
+  {e:'Lateral Lunge + Reach',s:3,r:'10 ea.',w:'35s',rs:'15s',c:'Wide step to side, sit into hip, reach DB to foot — inner thigh and glute',m:'Glutes · Adductors · Inner Thigh',y:YT('dumbbell lateral side lunge form')},
+ ]},
+{n:9,t:'ba',title:'Band Power Pull Circuit',phase:'Week 2 · Power & Speed',dur:'40 min',
+ desc:'Explosive band movements at heavy resistance. Upper body pulling strength increases and metabolic demand is significantly higher than Week 1.',
+ goals:['Back','Biceps','V-Taper','Power'],
+ exs:[
+  {e:'Explosive Pulldown',   s:4,r:'12–15',w:'35s',rs:'15s',c:'Anchor high, pull band explosively to hips — full lat engagement at the peak',m:'Lats · Teres Major · Biceps',y:YT('resistance band lat pulldown explosive form')},
+  {e:'Heavy Squat Jump',     s:4,r:'12',w:'35s',rs:'15s',c:'Heaviest band under feet — full depth squat, maximum jump against resistance',m:'Quads · Glutes · Explosive Power',y:YT('heavy resistance band squat jump')},
+  {e:'Single-Arm Row',       s:4,r:'12 ea.',w:'35s ea.',rs:'15s',c:'Full torso rotation on each pull — back and core working together',m:'Lats · Rhomboids · Core Rotation',y:YT('resistance band single arm row rotation')},
+  {e:'Sprint Arm Drive',     s:4,r:'35 sec',w:'35s',rs:'15s',c:'Anchor at waist behind, drive arms forward as in sprinting — mechanics training',m:'Shoulders · Triceps · Sprint Power',y:YT('resistance band sprint arm drive mechanics')},
+  {e:'Pallof Press',         s:4,r:'12 ea.',w:'35s',rs:'15s',c:'Anchor at side, press band away — anti-rotation core strength targets love handles',m:'Core · Obliques · Love Handles',y:YT('pallof press resistance band core')},
+  {e:'Band Good Morning',    s:3,r:'15',w:'35s',rs:'15s',c:'Band under feet, across upper back — hinge forward and feel hamstrings fully load',m:'Hamstrings · Glutes · Lower Back',y:YT('banded good morning hamstrings form')},
+ ]},
+{n:10,t:'ru',title:'Sprint Interval Session',phase:'Week 2 · Power & Speed',dur:'40 min',
+ desc:'True sprint intervals at 90% maximum effort. This session provides more testosterone boost than any other workout in the program.',
+ goals:['Testosterone','Fat Burn','Speed','Cardio'],
+ exs:[
+  {e:'Warm-Up + Drills',     s:1,r:'6 min',w:'6 min',rs:'—',c:'Jog 3 min, A-skips, B-skips, carioca, 2 build-up runs to 80% effort',m:'Full Body Activation',y:YT('sprint warm up A skip B skip drills')},
+  {e:'30m Sprint Intervals', s:8,r:'30m each',w:'30m',rs:'2 min walk',c:'90% maximum effort — this is NOT a jog. Sprint fully. Recover fully.',m:'Full Body Power · Cardio',y:YT('30 meter sprint interval training')},
+  {e:'Flying 20m Sprints',   s:6,r:'20m each',w:'20m',rs:'90s walk',c:'Jog 10m to build speed, full sprint final 20m — peak velocity training',m:'Fast-Twitch Fibers · Speed',y:YT('flying sprint 20 meter speed training')},
+  {e:'Lateral Sprint Shuffle',s:6,r:'20s',w:'20s',rs:'40s',c:'Side shuffle sprint — activates lateral glutes and hip stabilizers',m:'Glutes · Hip Abductors · Lateral Power',y:YT('lateral shuffle sprint agility drill')},
+  {e:'Resisted Band Sprint',  s:6,r:'20m',w:'20m',rs:'90s',c:'Band around waist anchored behind — drive forward against maximum resistance',m:'Full Drive Phase · Explosive Power',y:YT('resisted sprint band training speed')},
+  {e:'Cool-Down Walk',        s:1,r:'5 min',w:'5 min',rs:'—',c:'Walk immediately after last sprint — never sit down directly after sprinting',m:'Active Recovery',y:YT('sprint cool down walking recovery')},
+ ]},
+{n:11,t:'bw',title:'Bodyweight Power HIIT',phase:'Week 2 · Power & Speed',dur:'38 min',
+ desc:'Plyometric bodyweight session. Every movement is explosive. Burns maximum calories, builds fast-twitch fibers, and carves the physique.',
+ goals:['Power','Abs','Legs','Fat Burn'],
+ exs:[
+  {e:'Plyometric Push-Ups',  s:4,r:'10–12',w:'35s',rs:'15s',c:'Explode so hands leave the floor — chest power and core stabilization in one',m:'Chest · Triceps · Core',y:YT('plyometric push up explosive form')},
+  {e:'Jump Squats',          s:4,r:'12–15',w:'35s',rs:'15s',c:'Full depth squat, maximum jump height, soft forefoot landing — repeat immediately',m:'Quads · Glutes · Calves',y:YT('jump squat HIIT explosive legs form')},
+  {e:'Speed Skaters',        s:4,r:'20 total',w:'35s',rs:'15s',c:'Lateral bound, single-leg landing, reach opposite hand down — balance drill',m:'Glutes · Adductors · Cardio',y:YT('speed skaters lateral bound exercise')},
+  {e:'Plank to Push-Up',     s:4,r:'10–12',w:'35s',rs:'15s',c:'Elbow plank to hand plank and back — zero hip sway allowed throughout',m:'Core · Chest · Triceps · Shoulders',y:YT('plank to push up form tutorial')},
+  {e:'Tuck Jumps',           s:4,r:'10–12',w:'35s',rs:'15s',c:'Pull knees to chest at peak height, land softly, jump immediately again',m:'Hip Flexors · Legs · Core',y:YT('tuck jump plyometric explosive form')},
+  {e:'V-Sit Crunch',         s:3,r:'15',w:'35s',rs:'15s',c:'Balance on tailbone in V, crunch knees and hands together at the peak',m:'Abs · Hip Flexors · Core',y:YT('v sit crunch abs core exercise form')},
+ ]},
+{n:12,t:'co',title:'DB + Band: Back & Chest',phase:'Week 2 · Power & Speed',dur:'48 min',
+ desc:'Push-pull superset session. Chest and back trained together — the pairing that creates the widest, most defined upper body.',
+ goals:['Chest','Back','Upper Body Width','Shoulders'],
+ exs:[
+  {e:'DB Floor Chest Press', s:4,r:'10–12',w:'35s',rs:'15s',c:'Full range — press to lockout, lower until triceps touch floor, full chest stretch',m:'Chest · Triceps · Front Delts',y:YT('dumbbell floor chest press full range')},
+  {e:'Band Row ↑ (superset)',s:4,r:'12–15',w:'35s',rs:'15s',c:'(SUPERSET) Row to lower chest immediately after press — full scapular retraction',m:'Lats · Rhomboids · Biceps',y:YT('resistance band row back superset form')},
+  {e:'DB Push-Up Row',       s:4,r:'8 ea.',w:'35s',rs:'15s',c:'Push-up then row each DB — chest and back in one continuous compound move',m:'Chest · Back · Core · Triceps',y:YT('dumbbell push up row chest back')},
+  {e:'Band Pull-Apart ↑',    s:4,r:'15',w:'35s',rs:'15s',c:'(SUPERSET) Straight arms, pull band to full wingspan — rear delts and upper back',m:'Rear Delts · Upper Back',y:YT('resistance band pull apart upper back form')},
+  {e:'Incline Push-Up',      s:3,r:'12–15',w:'35s',rs:'15s',c:'Feet elevated on chair — specifically targets upper chest and front delts',m:'Upper Chest · Front Delts',y:YT('incline push up feet elevated upper chest')},
+  {e:'Face Pull + Shrug ↑',  s:3,r:'15',w:'35s',rs:'15s',c:'(SUPERSET) Face pull then shrug at peak — rear delt and trap in one movement',m:'Rear Delts · Traps · Upper Back',y:YT('band face pull with shrug traps tutorial')},
+ ]},
+{n:13,t:'co',title:'Legs, Glutes & Sprints',phase:'Week 2 · Power & Speed',dur:'50 min',
+ desc:'Heavy lower body session then sprint finish. Strongest glute stimulus of Week 2. Legs then cardio to incinerate remaining glycogen.',
+ goals:['Legs','Glutes','Butt','Sprint','Fat Burn'],
+ exs:[
+  {e:'Goblet Squat Heavy',   s:4,r:'10–12',w:'35s',rs:'15s',c:'Heaviest DB you have — below parallel every rep, primary leg and glute sculptor',m:'Quads · Glutes · Core',y:YT('heavy goblet squat dumbbell form')},
+  {e:'Romanian Deadlift',    s:4,r:'10–12',w:'35s',rs:'15s',c:'Slow descent, feel full hamstring stretch — never allow the back to round',m:'Hamstrings · Glutes · Lower Back',y:YT('dumbbell romanian deadlift form heavy')},
+  {e:'Banded Hip Thrust',    s:4,r:'15–20',w:'35s',rs:'15s',c:'Heavy band across hips, pause 1 sec at top — maximum glute max activation',m:'Glutes · Hamstrings',y:YT('banded hip thrust max activation')},
+  {e:'Step-Up + Knee Drive', s:4,r:'10 ea.',w:'35s',rs:'15s',c:'Step onto chair, drive opposite knee to chest — power and hip stability',m:'Glutes · Quads · Hip Flexors',y:YT('dumbbell step up knee drive glutes')},
+  {e:'Banded Clamshell',     s:3,r:'15 ea.',w:'35s',rs:'15s',c:'On side, band above knees, open and close slow — glute medius isolation',m:'Glute Medius · Hip Abductors',y:YT('banded clamshell glute medius form')},
+  {e:'40m Sprint Intervals', s:6,r:'40m each',w:'40m',rs:'2 min',c:'All-out sprint to finish the session — maximum effort on every single rep',m:'Full Body · Legs · Cardio',y:YT('40 meter sprint intervals training')},
+ ]},
+{n:14,t:'re',title:'Active Recovery',phase:'Week 2 · Rest Day',dur:'Optional',goals:['Recovery'],exs:[]},
+// W3 ─────────────────────────────────────────────────────
+{n:15,t:'db',title:'Max Effort DB Circuit',phase:'Week 3 · Intensity Peak',dur:'50 min',
+ desc:'Week 3 is the hardest week. 40 seconds on, 12 seconds rest. Your body is conditioned for this now. Push harder than you think you can.',
+ goals:['Max Fat Burn','Muscle Definition','Shoulders','Chest'],
+ exs:[
+  {e:'DB Clean and Press',   s:5,r:'8',w:'40s',rs:'12s',c:'Full power clean from floor to shoulders, then press overhead — maximum power output',m:'Full Body · Shoulders · Traps · Legs',y:YT('dumbbell clean and press power form')},
+  {e:'Bulgarian Split Squat',s:5,r:'8 ea.',w:'40s',rs:'12s',c:'Heaviest DBs with good form — most effective single-leg glute exercise in program',m:'Quads · Glutes · Balance',y:YT('heavy dumbbell bulgarian split squat')},
+  {e:'Arnold Press Heavy',   s:4,r:'10',w:'40s',rs:'12s',c:'Slow rotation — palms in, rotate outward as you press. All 3 deltoid heads.',m:'All Deltoid Heads · Triceps',y:YT('heavy arnold press all deltoid heads')},
+  {e:'Heavy Bent-Over Row',  s:4,r:'10–12',w:'40s',rs:'12s',c:'Maximum load — pull elbows past torso, feel lats fully contract every rep',m:'Lats · Rhomboids · Biceps',y:YT('heavy dumbbell bent over row lats form')},
+  {e:'Thruster Max Speed',   s:4,r:'max',w:'40s',rs:'12s',c:'Max reps for full 40 seconds — the highest calorie-burning move in the program',m:'Full Body · Shoulders · Legs · Core',y:YT('dumbbell thruster max speed reps HIIT')},
+  {e:'Farmer Carry + Sprint',s:4,r:'20m + sprint',w:'30m+sprint',rs:'60s',c:'Walk heavy 20m holding DBs, drop them, sprint back — brutal finisher',m:'Full Body · Grip · Cardio',y:YT('farmer carry to sprint combination')},
+ ]},
+{n:16,t:'ba',title:'Band Peak Circuit',phase:'Week 3 · Intensity Peak',dur:'45 min',
+ desc:'Maximum band resistance. Every pulling movement builds back thickness and the V-taper that defines an athletic male physique.',
+ goals:['Back Width','V-Taper','Shoulders','Biceps'],
+ exs:[
+  {e:'Heavy Band Deadlift Row',s:5,r:'10–12',w:'40s',rs:'12s',c:'Band under feet — full deadlift then row to hips. Entire posterior chain.',m:'Full Back · Glutes · Hamstrings · Biceps',y:YT('resistance band deadlift row compound')},
+  {e:'Heavy Jump Squat',     s:5,r:'12',w:'40s',rs:'12s',c:'Heaviest band under feet — maximum jump height against resistance every rep',m:'Quads · Glutes · Explosive Power',y:YT('heavy banded squat jump explosive form')},
+  {e:'Pulldown + Row Combo', s:4,r:'12',w:'40s',rs:'12s',c:'Anchor high — pull down to hips, transition to row position. Full lat width.',m:'Lats · Teres Major · Rhomboids',y:YT('band pulldown to row lats combination')},
+  {e:'Banded Sprint Drill',  s:5,r:'40 sec',w:'40s',rs:'12s',c:'Anchor at waist — drive forward explosively against resistance for full 40 seconds',m:'Full Body · Explosive Drive',y:YT('banded sprint resistance training drill')},
+  {e:'Pallof Press + Rotate',s:4,r:'12 ea.',w:'40s',rs:'12s',c:'Press out, rotate torso 30 degrees, return — peak oblique anti-rotation work',m:'Core · Obliques · Love Handles',y:YT('pallof press rotation obliques form')},
+  {e:'Band Chest Press + Row',s:4,r:'12 each',w:'40s',rs:'12s',c:'Band around back for press, turn for row — push then pull, full upper body',m:'Chest · Back · Full Upper Body',y:YT('resistance band chest press row superset')},
+ ]},
+{n:17,t:'ru',title:'Peak Sprint Session',phase:'Week 3 · Intensity Peak',dur:'45 min',
+ desc:'Maximum speed day. 95% effort on every sprint. Record your 100m time — you race it again on Day 24 and Day 30.',
+ goals:['Max Testosterone','Peak Speed','Fat Burn','Personal Record'],
+ exs:[
+  {e:'8-Min Full Warm-Up',   s:1,r:'8 min',w:'8 min',rs:'—',c:'Extended warm-up mandatory. Drills, dynamic stretch, 3 build-up runs to 80%.',m:'Full Body Activation',y:YT('full sprint warm up dynamic drills')},
+  {e:'60m Sprint Intervals', s:6,r:'60m each',w:'60m',rs:'3 min full',c:'95% maximum effort — this is the sprint that produces the most testosterone',m:'Full Body · Power · Speed',y:YT('60 meter sprint interval peak training')},
+  {e:'100m Time Trial',      s:4,r:'100m each',w:'100m',rs:'4 min',c:'ALL-OUT effort — record your best time. This is your benchmark to beat.',m:'Full Body Endurance · Power',y:YT('100m sprint time trial benchmark')},
+  {e:'Resisted Band Sprints', s:6,r:'20m each',w:'20m',rs:'90s',c:'Heavy band at waist — maximum effort against resistance, sprint mechanics',m:'Explosive Power · Drive Phase',y:YT('band resisted sprint training speed')},
+  {e:'Agility Ladder Drills', s:5,r:'40 sec',w:'40s',rs:'30s',c:'2-in 2-out, or high knees through ladder — coordination and foot speed',m:'Agility · Calves · Hip Flexors',y:YT('agility ladder speed drills training')},
+  {e:'8-Min Cool-Down Stretch',s:1,r:'8 min',w:'8 min',rs:'—',c:'Walk 5 min then stretch hip flexors, hamstrings, calves — mandatory',m:'Recovery · Flexibility',y:YT('post sprint stretch cool down routine')},
+ ]},
+{n:18,t:'bw',title:'Plyometric Peak Circuit',phase:'Week 3 · Intensity Peak',dur:'42 min',
+ desc:'Maximum bodyweight intensity. Every movement is explosive and plyometric. The hardest bodyweight session in the 30-day program.',
+ goals:['Power','Cardio','Full Body','Core'],
+ exs:[
+  {e:'Plyometric Burpees',   s:5,r:'8–10',w:'40s',rs:'12s',c:'Full push-up at bottom, explosive jump at top, clap overhead every single rep',m:'Full Body · Cardio',y:YT('plyometric burpee explosive clap overhead')},
+  {e:'Push-Up to Stand',     s:5,r:'8–10',w:'40s',rs:'12s',c:'Push-up, explode to feet, stand — flow movement, constant rhythm',m:'Chest · Triceps · Legs · Core',y:YT('explosive push up to standing flow')},
+  {e:'Single-Leg Jump Squat',s:4,r:'8 ea.',w:'40s',rs:'12s',c:'One-leg takeoff, two-leg soft landing — alternating legs, power and balance',m:'Quads · Glutes · Explosive Power',y:YT('single leg jump squat explosive legs')},
+  {e:'Dragon Flag',          s:4,r:'6–8',w:'40s',rs:'12s',c:'Hold bench behind head, raise body straight — elite core strength exercise',m:'Abs · Core · Hip Flexors',y:YT('dragon flag progression abs strength')},
+  {e:'Broad Jump Series',    s:4,r:'3 jumps',w:'40s',rs:'12s',c:'3 consecutive broad jumps for maximum distance — explosive glutes and legs',m:'Glutes · Quads · Power',y:YT('broad jump series explosive power legs')},
+  {e:'Hollow Body + V-Crunch',s:3,r:'15',w:'40s',rs:'12s',c:'Hollow rock then drive into V-crunch — isometric then dynamic abs combined',m:'Abs · Lower Abs · Core',y:YT('hollow body v up crunch abs')},
+ ]},
+{n:19,t:'co',title:'All 4 Modalities — Peak',phase:'Week 3 · Intensity Peak',dur:'55 min',
+ desc:'Biggest session of Week 3. All four training tools. Love handles, abs, chest, shoulders, back, legs, and glutes — every target in one session.',
+ goals:['Full Body','Max Fat Burn','Love Handles','Peak Output'],
+ exs:[
+  {e:'DB Thruster + Sprint 20m',s:5,r:'8 + sprint',w:'40s+sprint',rs:'2 min',c:'8 thrusters then immediately sprint 20m all-out — maximum metabolic demand',m:'Full Body',y:YT('dumbbell thruster to sprint combo HIIT')},
+  {e:'Band Row + Jump Squat', s:5,r:'10 each',w:'40s each',rs:'12s',c:'10 heavy rows then 10 jump squats with zero rest — back to legs',m:'Back · Legs · Glutes · Cardio',y:YT('band row to jump squat superset HIIT')},
+  {e:'Renegade Row + Push-Up',s:4,r:'8 ea.',w:'40s',rs:'12s',c:'Push-up, row left, row right = 1 rep — complete core and chest compound',m:'Core · Chest · Back · Shoulders',y:YT('renegade row push up combination')},
+  {e:'Sprint + Curl to Press', s:4,r:'sprint + 8',w:'sprint+40s',rs:'90s',c:'Sprint 40m, grab DBs, 8 curl to press — no break between sprint and weights',m:'Full Body · Shoulders · Arms · Legs',y:YT('sprint to dumbbell curl press combo')},
+  {e:'Russian Twist to OHP',  s:3,r:'10 each',w:'40s',rs:'12s',c:'Twist side to side then press DB overhead — love handles to shoulders',m:'Obliques · Love Handles · Shoulders',y:YT('russian twist to overhead press')},
+  {e:'Band Deadlift + Hip Thrust',s:4,r:'10 each',w:'40s each',rs:'12s',c:'10 band deadlifts then 10 hip thrusts — full posterior chain in one pair',m:'Hamstrings · Glutes · Lower Back',y:YT('band deadlift hip thrust posterior chain')},
+ ]},
+{n:20,t:'bw',title:'Love Handles Assault',phase:'Week 3 · Intensity Peak',dur:'40 min',
+ desc:'Dedicated oblique and love handle session. Every movement rotates, tilts, or isolates the lateral core. Most targeted midsection day in the program.',
+ goals:['Love Handles','Obliques','Abs','Core'],
+ exs:[
+  {e:'Side Plank Hip Dips L', s:4,r:'15–20',w:'40s',rs:'12s',c:'Side plank, drop hip to floor and raise — oblique contraction every rep',m:'Obliques · Love Handles · Core',y:YT('side plank hip dips obliques')},
+  {e:'Side Plank Hip Dips R', s:4,r:'15–20',w:'40s',rs:'12s',c:'Equal volume right side — balanced oblique development throughout the program',m:'Obliques · Love Handles · Core',y:YT('side plank hip dips right obliques')},
+  {e:'Bicycle Crunch Slow',   s:4,r:'20 total',w:'40s',rs:'12s',c:'2-second rotation each side — maximum oblique fiber recruitment when slow',m:'Obliques · Abs · Hip Flexors',y:YT('slow bicycle crunch oblique maximum')},
+  {e:'Woodchoppers',          s:4,r:'12 ea.',w:'40s',rs:'12s',c:'DB or band — diagonal chop from hip to overhead, rotate through entire core',m:'Obliques · Love Handles · Shoulders',y:YT('woodchopper exercise oblique core rotation')},
+  {e:'Dead Bug',              s:3,r:'10 ea.',w:'40s',rs:'12s',c:'Opposite arm and leg lower slowly — maintain lower back contact with floor',m:'Deep Core · Lower Abs · Stability',y:YT('dead bug exercise core stability form')},
+  {e:'Hanging Knee Raises',   s:3,r:'12–15',w:'40s',rs:'12s',c:'Drive knees to chest, lower slowly — slow eccentric creates maximum lower ab work',m:'Lower Abs · Hip Flexors · Core',y:YT('hanging knee raise lower abs form')},
+ ]},
+{n:21,t:'re',title:'Active Recovery',phase:'Week 3 · Rest Day',dur:'Optional',goals:['Recovery'],exs:[]},
+// W4 ─────────────────────────────────────────────────────
+{n:22,t:'db',title:'Dumbbell Burn Circuit',phase:'Week 4 · Burn & Finish',dur:'50 min',
+ desc:'Week 4 — 45 seconds on, 10 seconds rest. Shortest rest in the program. You have 3 weeks of conditioning behind you. Finish what you started.',
+ goals:['Max Fat Burn','Definition','Shoulders','Full Body'],
+ exs:[
+  {e:'Clean and Press Max',  s:5,r:'8–10',w:'45s',rs:'10s',c:'Heaviest DBs you can safely clean — maximum reps in 45 seconds straight',m:'Full Body · Shoulders · Power',y:YT('dumbbell clean press max effort heavy')},
+  {e:'Lateral Raise Dropset',s:4,r:'10+10',w:'45s',rs:'10s',c:'10 reps medium, grab lighter pair immediately, 10 more — no rest between',m:'Medial Deltoids · Shoulder Width',y:YT('dumbbell lateral raise drop set')},
+  {e:'Bulgarian Split Squat',s:5,r:'8 ea.',w:'45s',rs:'10s',c:'Heaviest with good form — shapes glutes more effectively than any other movement',m:'Quads · Glutes · Balance',y:YT('heavy bulgarian split squat max intensity')},
+  {e:'Bent-Over Row Max',    s:4,r:'10–12',w:'45s',rs:'10s',c:'Maximum load — full range, elbows past torso every single rep',m:'Lats · Back · Biceps',y:YT('heavy dumbbell bent over row max load')},
+  {e:'Thruster Nonstop',     s:4,r:'max reps',w:'45s',rs:'10s',c:'Do NOT put DBs down for 45 seconds — metabolic peak of the entire program',m:'Full Body · Shoulders · Legs',y:YT('dumbbell thruster nonstop max reps')},
+  {e:'Farmer Carry + Sprint',s:4,r:'20m + sprint',w:'20m+sprint',rs:'90s',c:'Walk heavy 20m, drop DBs, sprint back — leave everything on the floor',m:'Full Body · Grip · Cardio',y:YT('farmer carry sprint combination finisher')},
+ ]},
+{n:23,t:'ba',title:'Band Endurance Circuit',phase:'Week 4 · Burn & Finish',dur:'45 min',
+ desc:'Maximum band resistance, 45 seconds of sustained tension. Develops the back thickness and shoulder width that defines the athletic physique.',
+ goals:['Back Width','Shoulder Definition','V-Taper','Biceps'],
+ exs:[
+  {e:'Heavy Band Row',       s:5,r:'15',w:'45s',rs:'10s',c:'Maximum resistance — strict form for full 45 seconds, no breaking for speed',m:'Lats · Rhomboids · Biceps',y:YT('heavy resistance band bent over row endurance')},
+  {e:'Squat to Row Combo',   s:5,r:'12',w:'45s',rs:'10s',c:'Squat down then stand and row — legs and back in one compound chain',m:'Legs · Back · Full Chain',y:YT('squat to row compound resistance band')},
+  {e:'Face Pull Endurance',  s:4,r:'20',w:'45s',rs:'10s',c:'Slow full range every rep — external rotation at peak, elbows wide throughout',m:'Rear Delts · Rotator Cuff',y:YT('band face pull endurance rear delt form')},
+  {e:'Hip Thrust Endurance', s:4,r:'20',w:'45s',rs:'10s',c:'Pause 1 second at top every rep — 45 full seconds of glute max tension',m:'Glutes · Hamstrings',y:YT('banded hip thrust endurance pause form')},
+  {e:'Walk + Overhead Press',s:4,r:'20m',w:'45s',rs:'10s',c:'Step forward pressing band overhead with each step — glutes + shoulders cardio',m:'Glutes · Shoulders · Core',y:YT('resistance band walk overhead press moving')},
+  {e:'Tricep Pressdown',     s:3,r:'15–20',w:'45s',rs:'10s',c:'Anchor high, elbows fixed at sides — full extension, hard squeeze at bottom',m:'Triceps · Upper Arms',y:YT('resistance band tricep pressdown form')},
+ ]},
+{n:24,t:'ru',title:'Peak Speed Day',phase:'Week 4 · Burn & Finish',dur:'45 min',
+ desc:'Final full sprint session. Race your Day 17 100m time — 3 weeks of conditioning should show measurable improvement.',
+ goals:['Max Speed','Testosterone','Fat Burn','Personal Record'],
+ exs:[
+  {e:'Full Warm-Up',         s:1,r:'8 min',w:'8 min',rs:'—',c:'Build to 80% by end of warm-up — prime CNS for maximum sprint effort',m:'Full Activation',y:YT('full sprint warm up activation CNS')},
+  {e:'100m Personal Record', s:4,r:'100m each',w:'100m',rs:'5 min full',c:'Beat your Day 17 time — record all 4 times and compare directly',m:'Full Body · Max Power',y:YT('100m sprint personal record attempt')},
+  {e:'60m Sprints',          s:6,r:'60m each',w:'60m',rs:'3 min',c:'Maximum effort — these should be the fastest 60m of the entire program',m:'Full Body · Speed',y:YT('60 meter sprint peak speed performance')},
+  {e:'Sprint + Backpedal',   s:6,r:'20m each way',w:'20m each',rs:'60s',c:'Sprint forward 20m, backpedal to start — speed and agility combined',m:'Full Body · Glutes · Agility',y:YT('sprint backpedal agility drill training')},
+  {e:'40m Acceleration',     s:5,r:'40m each',w:'40m',rs:'90s',c:'Build from zero to maximum speed over 40m — acceleration mechanics',m:'Drive Phase · Power',y:YT('40 meter acceleration sprint mechanics form')},
+  {e:'10-Min Cool-Down',     s:1,r:'10 min',w:'10 min',rs:'—',c:'Extended cool-down — walk, stretch, breathe through nose fully',m:'Recovery',y:YT('post workout cool down 10 minute stretch')},
+ ]},
+{n:25,t:'bw',title:'Full Body Blitz',phase:'Week 4 · Burn & Finish',dur:'45 min',
+ desc:'Maximum bodyweight intensity. 45 seconds on, 10 seconds rest. Hardest bodyweight session of the entire 30-day program.',
+ goals:['Fat Burn','Full Body','Core','Power'],
+ exs:[
+  {e:'Burpee Box Jump',      s:5,r:'8–10',w:'45s',rs:'10s',c:'Burpee then immediately explode onto box — or maximum tuck jump. Peak cardio.',m:'Full Body · Power · Cardio',y:YT('burpee box jump combination HIIT explosive')},
+  {e:'Pistol Squat Progression',s:5,r:'6 ea.',w:'45s',rs:'10s',c:'Full pistol or assisted — single leg demands 2x the activation of two-leg squat',m:'Quads · Glutes · Balance',y:YT('pistol squat progression form tutorial')},
+  {e:'Push-Up to Jump Squat',s:4,r:'8+8',w:'45s',rs:'10s',c:'Push-up then immediately jump squat — chest to legs nonstop full body',m:'Chest · Legs · Core · Cardio',y:YT('push up to jump squat combination full')},
+  {e:'V-Up + Oblique Twist', s:4,r:'15',w:'45s',rs:'10s',c:'Full V-up then twist to each side — lower abs then obliques in one move',m:'Abs · Obliques · Love Handles',y:YT('v up oblique twist core abs')},
+  {e:'Lateral Jump + Tuck',  s:4,r:'10 total',w:'45s',rs:'10s',c:'Lateral bound then tuck jump — multi-plane explosive power',m:'Glutes · Legs · Hip Abductors',y:YT('lateral jump tuck jump explosive combination')},
+  {e:'Nonstop Mountain Climbers',s:3,r:'45 sec',w:'45s',rs:'10s',c:'Maximum speed for full 45 seconds — arms locked out, hips flat, no stopping',m:'Core · Shoulders · Cardio',y:YT('mountain climbers 45 seconds nonstop core')},
+ ]},
+{n:26,t:'co',title:'Love Handle Elimination',phase:'Week 4 · Burn & Finish',dur:'50 min',
+ desc:'Most targeted love handle session in the program. Rotational movements, oblique isolation, band tension, and speed work combined.',
+ goals:['Love Handles','Obliques','Abs','Fat Burn'],
+ exs:[
+  {e:'DB Wood Chop',         s:5,r:'12 ea.',w:'45s',rs:'10s',c:'One DB, diagonal chop from overhead to opposite hip — rotational power through core',m:'Obliques · Love Handles · Shoulders',y:YT('dumbbell wood chop obliques rotational')},
+  {e:'Band Rotational Row',  s:5,r:'12 ea.',w:'45s',rs:'10s',c:'Anchor at side, row with full torso rotation — the oblique pull nobody does',m:'Obliques · Lats · Core Rotation',y:YT('banded rotational row obliques core')},
+  {e:'Russian Twist Slow',   s:4,r:'20 total',w:'45s',rs:'10s',c:'Heavy DB, 3-count slow rotation each side — feel every oblique fiber',m:'Obliques · Love Handles · Abs',y:YT('heavy russian twist slow controlled form')},
+  {e:'Pallof Press + Chop',  s:4,r:'12 ea.',w:'45s',rs:'10s',c:'Pallof press then chop down — anti-rotation then dynamic rotation in one set',m:'Core · Obliques · Love Handles',y:YT('pallof press to woodchop combination core')},
+  {e:'Side Plank Reach Through',s:4,r:'12 ea.',w:'45s',rs:'10s',c:'Side plank, reach top arm under body — maximum oblique engagement',m:'Obliques · Love Handles · Stability',y:YT('side plank reach through oblique form')},
+  {e:'Sprint + Lateral Shuffle',s:5,r:'20m each',w:'20m',rs:'60s',c:'Sprint forward 20m, shuffle back sideways — linear speed then lateral glutes',m:'Full Body · Lateral Glutes · Cardio',y:YT('sprint to lateral shuffle drill combination')},
+ ]},
+{n:27,t:'co',title:'Chest & Shoulders Max',phase:'Week 4 · Burn & Finish',dur:'50 min',
+ desc:'Dedicated upper body push. Maximum chest and shoulder development. The muscles that create the athletic upper body physique.',
+ goals:['Chest','Shoulders','Triceps','Upper Body'],
+ exs:[
+  {e:'Chest Fly + Press Combo',s:5,r:'10+10',w:'45s',rs:'10s',c:'10 flies then 10 presses — fly opens chest, press closes it, full activation in one set',m:'Chest · Front Delts · Triceps',y:YT('dumbbell fly to press combo chest full')},
+  {e:'Arnold Press Heavy',   s:5,r:'10',w:'45s',rs:'10s',c:'Heaviest Arnold press of the program — slow deliberate rotation, full range',m:'All 3 Deltoid Heads · Triceps',y:YT('heavy arnold press peak workout form')},
+  {e:'Push-Up Plank Hold',   s:4,r:'10 + hold',w:'45s',rs:'10s',c:'10 push-ups then hold top position for remainder of 45 seconds',m:'Chest · Core · Triceps · Shoulders',y:YT('push up hold isometric chest core')},
+  {e:'Band Press + Fly',     s:4,r:'12 each',w:'45s',rs:'10s',c:'Band around back — alternate press and fly. Constant chest tension throughout.',m:'Chest · Front Delts',y:YT('resistance band chest press fly alternate')},
+  {e:'Lateral + Front Combo',s:4,r:'10 each',w:'45s',rs:'10s',c:'Alternate lateral and front raise — hits all visible shoulder muscle heads',m:'Medial and Front Deltoids',y:YT('lateral raise front raise alternate shoulder')},
+  {e:'Overhead Tricep Ext',  s:3,r:'12–15',w:'45s',rs:'10s',c:'Both hands one heavy DB — full stretch at bottom, lockout at top',m:'Triceps Long Head',y:YT('overhead dumbbell tricep extension two hands')},
+ ]},
+{n:28,t:'ru',title:'Speed & Agility Day 28',phase:'Week 4 · Burn & Finish',dur:'45 min',
+ desc:'Speed combined with agility and lateral movement — the combination that maximizes calorie burn during running sessions.',
+ goals:['Speed','Agility','Cardio','Fat Burn'],
+ exs:[
+  {e:'6-Min Warm-Up',        s:1,r:'6 min',w:'6 min',rs:'—',c:'You know the drill — drills, build-ups, prepare hips and ankles',m:'Activation',y:YT('sprint workout warm up drills')},
+  {e:'100m All-Out Sprint',  s:5,r:'100m',w:'100m',rs:'4 min',c:'Beat your Day 24 time. You are faster now. Prove it.',m:'Full Body · Peak Speed',y:YT('100m sprint all out maximum effort')},
+  {e:'T-Drill Agility',      s:6,r:'each',w:'45s',rs:'60s',c:'Forward sprint, lateral shuffle, backpedal — multi-directional speed',m:'Agility · Glutes · Hip Stabilizers',y:YT('T drill agility cone training speed')},
+  {e:'Sprint + Lateral Bound',s:6,r:'30m + 5 bounds',w:'30m+bounds',rs:'90s',c:'Sprint 30m then 5 max-distance broad bounds — linear to lateral power',m:'Full Body · Glutes · Power',y:YT('sprint lateral bound combination training')},
+  {e:'Hill Sprints',         s:8,r:'20m each',w:'20m',rs:'90s',c:'5–10% grade — explosive drive, pump arms hard, maximum effort up the hill',m:'Glutes · Hamstrings · Drive Power',y:YT('hill sprint training incline running')},
+  {e:'8-Min Cool-Down',      s:1,r:'8 min',w:'8 min',rs:'—',c:'Full lower body stretch — hamstrings, hip flexors, calves, quads',m:'Recovery',y:YT('lower body stretch post workout cool down')},
+ ]},
+{n:29,t:'co',title:'Day 29 — The Penultimate',phase:'Week 4 · Burn & Finish',dur:'55 min',
+ desc:'Second-to-last session. All four modalities. Biggest circuit of the program. 30 days of conditioning — this should feel like your strongest session.',
+ goals:['Full Body','Max Fat Burn','All Goals','Peak'],
+ exs:[
+  {e:'Thruster + 40m Sprint',s:5,r:'10 + sprint',w:'45s+sprint',rs:'2 min',c:'10 thrusters then sprint 40m immediately — most demanding superset in program',m:'Full Body',y:YT('dumbbell thruster 40 meter sprint combo')},
+  {e:'Band Row + Jump Squat',s:5,r:'12 each',w:'45s each',rs:'10s',c:'12 heavy rows then 12 jump squats — back to legs, zero rest between',m:'Back · Legs · Glutes · Cardio',y:YT('band row jump squat heavy superset')},
+  {e:'Wood Chop + Sprint 20m',s:4,r:'10 ea + sprint',w:'45s+sprint',rs:'90s',c:'10 wood chops each side then sprint 20m — obliques then full body blast',m:'Obliques · Love Handles · Full Body',y:YT('wood chop to sprint obliques combination')},
+  {e:'Burpee to Band Row',   s:4,r:'8–10',w:'45s',rs:'10s',c:'Burpee up, grab band, row — ground to pull, full body to back in one flow',m:'Full Body · Back · Cardio',y:YT('burpee to resistance band row HIIT')},
+  {e:'Arnold Press + Lateral',s:4,r:'10+10',w:'45s each',rs:'10s',c:'Arnold press then lighter DBs for lateral raises — all deltoid heads in one pair',m:'All Deltoid Heads · Width',y:YT('arnold press lateral raise superset deltoids')},
+  {e:'100m Sprint Final',    s:3,r:'100m',w:'100m',rs:'4 min',c:'Day 29. Three 100m sprints. Faster than Week 1 by 8–10 seconds minimum.',m:'Everything You Built',y:YT('100 meter sprint max effort final session')},
+ ]},
+{n:30,t:'co',title:'DAY 30 — FINAL TEST',phase:'Week 4 · Day 30 Finale',dur:'60 min',
+ desc:'Day 30. Your final performance test. Complete every section. Compare every result to Day 1. This is proof of what 30 days built.',
+ goals:['Performance Test','Personal Records','All Goals','Celebrate'],
+ exs:[
+  {e:'100m Sprint Time Trial',s:3,r:'100m max',w:'100m',rs:'5 min',c:'Compare to Day 17 time. Record every split. Your fastest sprint.',m:'Full Body Speed · Power',y:YT('100m sprint time trial final test')},
+  {e:'Max Push-Ups Test',    s:1,r:'max reps',w:'to failure',rs:'3 min',c:'Every rep until form breaks. Compare to Day 1 number. Record it.',m:'Chest · Triceps · Core',y:YT('max push ups strength test upper body')},
+  {e:'Thruster 2-Min Test',  s:1,r:'max reps',w:'2 min',rs:'3 min',c:'Medium DBs, maximum reps in 2 minutes. Week 1 vs today is significant.',m:'Full Body Endurance',y:YT('dumbbell thruster 2 minute max reps')},
+  {e:'Plank Hold Max Time',  s:1,r:'max time',w:'to failure',rs:'3 min',c:'Hold perfect form until it breaks. Your core is dramatically stronger.',m:'Core · Abs · Shoulders',y:YT('plank hold maximum time test core')},
+  {e:'Band Row Max 90 Sec',  s:1,r:'max reps',w:'90 sec',rs:'3 min',c:'Heavy band — max rows in 90 seconds. Your back is a different body part now.',m:'Back · Biceps · Endurance',y:YT('resistance band row 90 second max reps test')},
+  {e:'Final Celebration Sprint',s:1,r:'1×100m',w:'100m',rs:'—',c:'Day 30. Your last sprint. Run it knowing what 30 days built inside you.',m:'Everything You Built Over 30 Days',y:YT('100m sprint celebration running achievement')},
+ ]},
+];
+
+// ═══ STATE
+let curDay = 0, doneSets = new Set(), completedDays = new Set();
+let tSec = 30, tCur = 30, tRunning = false, tIv = null, curSets = 3;
+
+// ═══ PAGE NAV
+function goPage(id, btn) {
+  document.querySelectorAll('.pg').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.ntab').forEach(t => t.classList.remove('on'));
+  const map = {home:'pg-home', cal:'pg-cal', nut:'pg-nut', wk:'pg-wk'};
+  document.getElementById(map[id] || 'pg-home').classList.add('on');
+  if (btn) btn.classList.add('on');
+  else {
+    const ti = {home:0,cal:1,nut:2}[id];
+    if (ti !== undefined) document.querySelectorAll('.ntab')[ti]?.classList.add('on');
+  }
+  document.getElementById('hero').style.display = id === 'wk' ? 'none' : '';
+  if (id === 'cal') buildCal();
+  window.scrollTo(0, 0);
+}
+
+// ═══ CALENDAR
+function buildCal() {
+  const g = document.getElementById('calgrid');
+  g.innerHTML = '';
+  DAYS.forEach((d, i) => {
+    const div = document.createElement('div');
+    div.className = 'cd ' + d.t + (completedDays.has(i) ? ' done' : '');
+    div.innerHTML = '<div class="cdn">' + d.n + '</div><div class="cdt">' +
+      (d.t === 're' ? 'Rest' : d.title.split(' ').slice(0,3).join(' ')) + '</div>';
+    div.onclick = function() { openWorkout(i); };
+    g.appendChild(div);
+  });
+}
+
+// ═══ OPEN WORKOUT
+function openWorkout(idx) {
+  curDay = idx;
+  doneSets.clear();
+  document.getElementById('dbanner').classList.remove('on');
+  tStop(); tCur = tSec; updateTDisp();
+  var d = DAYS[idx];
+  document.getElementById('wkbadge').textContent = 'DAY ' + d.n;
+  document.getElementById('wktitle').textContent = d.title;
+  document.getElementById('wkdesc').textContent = d.desc;
+  var tc = {db:'#FF9A00',ba:'#64B0F0',bw:'#FF5A62',ru:'#8EE000',co:'#FFB833',re:'#3A4A5A'}[d.t] || '#FF9A00';
+  document.getElementById('wktags').innerHTML =
+    '<span class="tag" style="color:'+tc+';border-color:'+tc+'44;background:'+tc+'14">'+d.phase+'</span>' +
+    '<span class="tag" style="color:#8A9BB8;border-color:rgba(255,255,255,.15)">'+d.dur+'</span>' +
+    '<span class="tag" style="color:#8A9BB8;border-color:rgba(255,255,255,.12)">'+d.exs.length+' Exercises</span>' +
+    d.goals.map(function(g){return '<span class="tag" style="color:#B0C4DC;border-color:rgba(255,255,255,.1);font-size:.6rem">'+g+'</span>';}).join('');
+  document.getElementById('exlbl').textContent = d.t === 're' ? 'Rest Day Protocol' :
+    d.exs.length + ' Exercises  ·  ' + (d.exs[0] ? d.exs[0].w + ' work / ' + d.exs[0].rs + ' rest' : '');
+  buildExList(d);
+  buildSetBtns();
+  updateProg();
+  goPage('wk');
+}
+
+// ═══ BUILD EXERCISE LIST
+function buildExList(d) {
+  var list = document.getElementById('exlist');
+  list.innerHTML = '';
+  if (d.t === 're') {
+    list.innerHTML = '<div class="restcard"><div style="font-size:2.8rem;margin-bottom:.6rem">🌙</div>' +
+      '<div style="font-family:Bebas Neue,sans-serif;font-size:2rem;letter-spacing:.04em;color:#3A4A5A;margin-bottom:.5rem">Rest & Recover</div>' +
+      '<p style="color:#8A9BB8;font-size:.86rem;line-height:1.6;max-width:400px;margin:.6rem auto 0">Growth hormone and testosterone are released during deep sleep. This rest day is where today\'s training becomes tomorrow\'s strength.</p>' +
+      '<ul class="resttips"><li>Sleep 7.5–9 hours tonight</li><li>Light 20-min walk if restless</li>' +
+      '<li>5–10 min static stretching encouraged</li><li>Drink 3 liters of water today</li>' +
+      '<li>Take all supplements on rest days too</li><li>No HIIT, no sprints, no heavy lifting</li></ul></div>';
+    return;
+  }
+  var nc = {db:'db',ba:'ba',bw:'bw',ru:'ru',co:'co'}[d.t] || 'db';
+  d.exs.forEach(function(ex, i) {
+    var isDone = doneSets.has(i);
+    var svSz = function(v) { return String(v).length > 4 ? 'font-size:1rem' : ''; };
+    var card = document.createElement('div');
+    card.className = 'excard' + (isDone ? ' ck' : '');
+    card.id = 'exc-' + i;
+    card.innerHTML =
+      '<div class="exhdr">' +
+        '<div class="exnum ' + nc + '">' + (i+1) + '</div>' +
+        '<div class="exmain">' +
+          '<div class="exname">' + ex.e + '</div>' +
+          '<div class="exstats">' +
+            '<div class="stat sets"><span class="sv">' + ex.s + '</span><span class="sl">Sets</span></div>' +
+            '<div class="stat reps"><span class="sv" style="' + svSz(ex.r) + '">' + ex.r + '</span><span class="sl">Reps</span></div>' +
+            '<div class="stat wk"><span class="sv" style="' + svSz(ex.w) + '">' + ex.w + '</span><span class="sl">Work</span></div>' +
+            '<div class="stat re"><span class="sv" style="' + svSz(ex.rs) + '">' + ex.rs + '</span><span class="sl">Rest</span></div>' +
+          '</div>' +
+          '<div class="excue">' + ex.c + '</div>' +
+          '<div class="exmuscle">🎯 ' + ex.m + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="exfoot">' +
+        '<a class="ytbtn" href="' + ex.y + '" target="_blank" rel="noopener">▶ Watch on YouTube</a>' +
+        '<button class="donebt" onclick="markDone(' + i + ')">' + (isDone ? '✓ Complete' : 'Mark Complete') + '</button>' +
+      '</div>';
+    list.appendChild(card);
+  });
+}
+
+function markDone(i) {
+  if (doneSets.has(i)) doneSets.delete(i); else doneSets.add(i);
+  var card = document.getElementById('exc-' + i);
+  card.classList.toggle('ck', doneSets.has(i));
+  card.querySelector('.donebt').textContent = doneSets.has(i) ? '✓ Complete' : 'Mark Complete';
+  updateProg();
+}
+
+function updateProg() {
+  var total = DAYS[curDay].exs.length;
+  var done = doneSets.size;
+  document.getElementById('ptxt').textContent = done + ' / ' + total;
+  document.getElementById('pfill').style.width = total ? ((done/total)*100) + '%' : '0%';
+  if (done === total && total > 0) {
+    document.getElementById('dbanner').classList.add('on');
+    completedDays.add(curDay);
+  }
+}
+
+// ═══ TIMER
+function setPre(s, el) {
+  document.querySelectorAll('.pre').forEach(function(b){b.classList.remove('on')});
+  el.classList.add('on'); tSec = s; tCur = s; tStop();
+  document.getElementById('tgo').textContent = 'Start'; updateTDisp();
+}
+function tToggle() { tRunning ? tStop() : tStart(); }
+function tStart() {
+  tRunning = true;
+  document.getElementById('tdisp').classList.add('go');
+  document.getElementById('tgo').textContent = 'Pause';
+  tIv = setInterval(function() { tCur--; updateTDisp(); if (tCur <= 0) { tStop(); tCur = 0; updateTDisp(); } }, 1000);
+}
+function tStop() {
+  tRunning = false; clearInterval(tIv);
+  document.getElementById('tdisp').classList.remove('go');
+  document.getElementById('tgo').textContent = tCur > 0 ? 'Resume' : 'Start';
+}
+function tReset() { tStop(); tCur = tSec; document.getElementById('tgo').textContent = 'Start'; updateTDisp(); }
+function updateTDisp() {
+  var m = Math.floor(tCur/60).toString().padStart(2,'0');
+  var s = (tCur%60).toString().padStart(2,'0');
+  document.getElementById('tdisp').textContent = m+':'+s;
+  document.getElementById('ntimer').textContent = '⏱ '+m+':'+s;
+}
+
+// ═══ SETS
+function buildSetBtns() {
+  var el = document.getElementById('sbtns'); el.innerHTML = '';
+  for (var i=1; i<=7; i++) {
+    var b = document.createElement('button');
+    b.className = 'sn' + (i===curSets?' on':'');
+    b.textContent = i;
+    (function(n){ b.onclick = function(){ curSets=n; buildSetBtns(); }; })(i);
+    el.appendChild(b);
+  }
+}
+
+// ═══ INIT
+buildSetBtns();
+updateTDisp();
+</script>
+</body>
+</html>
